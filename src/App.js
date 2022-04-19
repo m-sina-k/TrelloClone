@@ -1,7 +1,7 @@
-import React from "react";
+import Toolbar from "components/Toolbar";
 
-function App() {
-  return <div>Trello Clone</div>;
+export default function App() {
+  return (
+      <Toolbar />
+  );
 }
-
-export default App;

@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Vazir-Medium";
+  src: url("assets/fonts/vazir/Vazir-Medium.woff");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Vazir-Bold";
+  src: url("assets/fonts/vazir/Vazir-Bold.woff");
+  font-style: normal;
+  font-weight: bold;
+}
+
+body {
+  background-color: seagreen;
+  direction: rtl;
+  font-family: 'Vazir-Bold';
+}
+
+@layer components {
+  .toolbar-button {
+    @apply px-3 py-1 cursor-pointer rounded flex items-center text-white text-sm hover:bg-lightWhite;
+  }
+}
+

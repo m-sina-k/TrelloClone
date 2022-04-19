@@ -2,24 +2,20 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      screens: {
-        sm: '480px',
-        md: '768px',
-        lg: '976px',
-        xl: '1440px',
+      fontFamily: {
+        vazir: ["Vazir-Medium", "arial", "sans-serif"],
+        vazirBold: ["Vazir-Bold", "impact", "serif"],
       },
       colors: {
-        brightRed: 'hsl(12, 88%, 59%)',
-        brightRedLight: 'hsl(12, 88%, 69%)',
-        brightRedSupLight: 'hsl(12, 88%, 95%)',
-        darkBlue: 'hsl(228, 39%, 23%)',
-        darkGrayishBlue: 'hsl(227, 12%, 61%)',
-        veryDarkBlue: 'hsl(233, 12%, 13%)',
-        veryPaleRed: 'hsl(13, 100%, 96%)',
-        veryLightGray: 'hsl(0, 0%, 98%)',
-      },
-      spacing: {
-        88: "22rem",
+        primaryTint: "#3588b9",
+        primary: "#026aa7",
+        primaryShade: "#014a75",
+        silver: "#091e420a",
+        textColor: "#5e6c84",
+        bgColor: "#fafbfc",
+        whiteHover:'#ebecf0',
+        lightWhite:"rgba(255,255,255,20%)",
+        lightBlack:"rgba(0,0,0,16%)",
       },
     },
   },
