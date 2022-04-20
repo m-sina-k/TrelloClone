@@ -37,7 +37,7 @@ const Dropdown = ({ type }) => {
             ))}
 
             <li className="flex pt-2 px-1 border-t-2 border-whiteHover">
-              <button className="py-2 text-center bg-primaryTint hover:bg-primaryShade text-white w-full rounded text-sm">
+              <button className="py-2 text-center bg-primaryTint hover:bg-primary text-white w-full rounded text-sm">
                 افزودن تخته جدید
               </button>
             </li>

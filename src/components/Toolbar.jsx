@@ -2,17 +2,23 @@ import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import Dropdown from "./Dropdown";
-import { setActiveDropdown } from "features/slices/uiSlice";
+import {
+  setActiveDropdown,
+  setShowSettingSidebar,
+} from "features/slices/uiSlice";
 
 // icon's
 import { TiStarOutline, TiStar, TiClipboard } from "react-icons/ti";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { BiMessageSquareAdd, BiFilterAlt } from "react-icons/bi";
-import { RiUserSharedLine, RiSettings3Line } from "react-icons/ri";
+import { RiUserSharedLine } from "react-icons/ri";
+import { HiOutlineCog } from "react-icons/hi";
 
 import logo from "assets/images/logo.png";
 
 const Toolbar = () => {
+  const { showSettingSidebar } = useSelector((state) => state.uiState);
+  const dispatch = useDispatch();
   return (
     <motion.nav
       animate={{ opacity: [0, 1] }}
@@ -53,8 +59,11 @@ const Toolbar = () => {
           />
           <ToolbarButton
             text="تنظیمات"
-            icon={RiSettings3Line}
-            additionalClass="py-2"
+            icon={HiOutlineCog}
+            additionalClass="py-2 setting-button"
+            callback={() =>
+              dispatch(setShowSettingSidebar(!showSettingSidebar))
+            }
           />
         </div>
       </div>
@@ -62,8 +71,16 @@ const Toolbar = () => {
   );
 };
 
-const ToolbarButton = ({ icon: Icon, text, additionalClass, dropdown }) => {
-  const { activeDropdown } = useSelector((state) => state.uiState);
+const ToolbarButton = ({
+  icon: Icon,
+  text,
+  additionalClass,
+  dropdown,
+  callback,
+}) => {
+  const { activeDropdown, setShowSettingSidebar } = useSelector(
+    (state) => state.uiState
+  );
   const dispatch = useDispatch();
 
   const closeDropdown = () => dispatch(setActiveDropdown(null));
@@ -81,10 +98,12 @@ const ToolbarButton = ({ icon: Icon, text, additionalClass, dropdown }) => {
           additionalClass ? additionalClass : ""
         }`}
         data-dropdown={dropdown}
-        onClick={(e) => dispatch(setActiveDropdown(e.currentTarget.dataset.dropdown))}
+        onClick={(e) =>
+          dispatch(setActiveDropdown(e.currentTarget.dataset.dropdown))
+        }
       >
         {Icon && <Icon size={18} className="ml-1" />}
-        {text}
+        <span>{text}</span>
         <MdKeyboardArrowDown
           size={18}
           className={`mr-1 transition-all duration-200 ${
@@ -98,8 +117,12 @@ const ToolbarButton = ({ icon: Icon, text, additionalClass, dropdown }) => {
   ) : (
     <span
       className={`toolbar-button ${additionalClass ? additionalClass : ""}`}
+      onClick={callback ? callback : null}
     >
-      {Icon && <Icon size={18} className="ml-1" />}
+      {Icon && (
+        // poineter event none : to prevent svg click
+        <Icon size={18} className="ml-1" style={{ pointerEvents: "none" }} />
+      )}
       {text}
     </span>
   );

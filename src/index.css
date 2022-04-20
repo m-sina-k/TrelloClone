@@ -16,14 +16,44 @@
 }
 
 body {
-  background-color: seagreen;
+  min-height: 100vh;
+  background-size: cover !important;
   direction: rtl;
-  font-family: 'Vazir-Bold';
+  font-family: "Vazir-Bold";
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
 }
 
 @layer components {
   .toolbar-button {
     @apply px-3 py-1 cursor-pointer rounded flex items-center text-white text-sm hover:bg-lightWhite;
   }
+  .setting-sidebar{
+    @apply fixed flex flex-col top-0 left-[-320px] w-80 h-full bg-bgColor p-5 overflow-hidden;
+  }
 }
+
+.setting-option--active{
+  border: 3.5px solid royalblue;
+}
+
+.setting-option--active::after{
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 23px;
+  height: 23px;
+  background: url(assets/images/utilities/check.png) center center no-repeat;
+  background-size: cover;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+}
+
 

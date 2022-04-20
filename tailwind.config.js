@@ -14,6 +14,8 @@ module.exports = {
         textColor: "#5e6c84",
         bgColor: "#fafbfc",
         whiteHover:'#ebecf0',
+        dark:'#2e3038',
+        darkTint:'#43454c',
         lightWhite:"rgba(255,255,255,20%)",
         lightBlack:"rgba(0,0,0,16%)",
       },
