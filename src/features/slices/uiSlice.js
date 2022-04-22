@@ -20,7 +20,7 @@ const initialState = {
     type: "color",
     value: "#82ccdd",
   },
-  showSettingSidebar: true,
+  showSettingSidebar: false,
 };
 
 const uiSlice = createSlice({

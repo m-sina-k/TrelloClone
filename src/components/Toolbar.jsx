@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { useDetectClickOutside } from "react-detect-click-outside";
@@ -6,6 +7,7 @@ import {
   setActiveDropdown,
   setShowSettingSidebar,
 } from "features/slices/uiSlice";
+import { toggleBoardMark } from "features/slices/boardsSlice";
 
 // icon's
 import { TiStarOutline, TiStar, TiClipboard } from "react-icons/ti";
@@ -15,10 +17,15 @@ import { RiUserSharedLine } from "react-icons/ri";
 import { HiOutlineCog } from "react-icons/hi";
 
 import logo from "assets/images/logo.png";
+import BoardName from "./toolbar/BoardName";
 
 const Toolbar = () => {
   const { showSettingSidebar } = useSelector((state) => state.uiState);
+  const { currentBoard } = useSelector((state) => state.boardsState);
   const dispatch = useDispatch();
+
+  const [boardName, setBoardName] = useState(currentBoard.name);
+
   return (
     <motion.nav
       animate={{ opacity: [0, 1] }}
@@ -37,12 +44,17 @@ const Toolbar = () => {
           />
           {/* board name */}
           <section className="flex items-center">
-            <ToolbarButton
-              text="نام تخته"
-              additionalClass="h-full font-vazirBold"
-            />
-            <span className="px-2 py-0 cursor-pointer h-full flex items-center rounded text-white mr-1 bg-lightWhite hover:text-yellow-500">
-              <TiStarOutline size={18} />
+            <BoardName boardName={boardName} setBoardName={setBoardName} />
+
+            <span
+              className="px-2 py-0 cursor-pointer h-full flex items-center rounded text-white mr-1 bg-lightWhite hover:text-yellow-500"
+              onClick={() => dispatch(toggleBoardMark())}
+            >
+              {currentBoard.isMarked ? (
+                <TiStar size={22} className="text-yellow-500" />
+              ) : (
+                <TiStarOutline size={20} />
+              )}
             </span>
           </section>
           <ToolbarButton text="تخته ها" icon={TiClipboard} dropdown="boards" />
@@ -78,9 +90,7 @@ const ToolbarButton = ({
   dropdown,
   callback,
 }) => {
-  const { activeDropdown, setShowSettingSidebar } = useSelector(
-    (state) => state.uiState
-  );
+  const { activeDropdown } = useSelector((state) => state.uiState);
   const dispatch = useDispatch();
 
   const closeDropdown = () => dispatch(setActiveDropdown(null));

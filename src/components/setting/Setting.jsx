@@ -12,13 +12,13 @@ import { HiVolumeUp, HiOutlineCog } from "react-icons/hi";
 const Setting = () => {
   const dispatch = useDispatch();
   const { showSettingSidebar } = useSelector((state) => state.uiState);
-  const [activeSettingTab, setActiveSettingTab] = useState("appearance");
+  const [activeSettingTab, setActiveSettingTab] = useState("main");
   const SLIDE_ANIMATION_DURATION = 300;
 
   const closeSettingSidebar = (e) => {
-    if (showSettingSidebar && !e.target.classList.contains("setting-button")) {
-      dispatch(setShowSettingSidebar(false));
+    if (!e.target.classList.contains("setting-button")) {
       setActiveSettingTab("main");
+      dispatch(setShowSettingSidebar(false));
     }
   };
 
