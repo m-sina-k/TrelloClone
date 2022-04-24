@@ -4,7 +4,7 @@ import { v4 as uuidV4 } from "uuid";
 const LS_boards = JSON.parse(localStorage.getItem("boards"));
 
 const initialState = {
-  updatingListID: null,
+  updatingListInfo: null,
   boards: LS_boards?.boardsList || null,
   currentBoard: LS_boards?.currentBoard || null,
 };
@@ -69,6 +69,24 @@ const boardsSlice = createSlice({
         })
       );
     },
+    updateListName: (state, { payload }) => {
+      const editedListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      state.currentBoard.lists[editedListIndex].name = payload;
+
+      state.boards = [...state.boards,state.currentBoard]
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
     toggleBoardMark: (state) => {
       const editedBoardIndex = state.boards.findIndex(
         (board) => board.id === state.currentBoard.id
@@ -83,12 +101,12 @@ const boardsSlice = createSlice({
         })
       );
     },
-    setUpdatingListID: (state, { payload }) => {
-      state.updatingListID = payload;
+    setUpdatingListInfo: (state, { payload }) => {
+      state.updatingListInfo = payload;
     },
     addNewTask: (state, { payload }) => {
       const listIndex = state.currentBoard.lists.findIndex(
-        (list) => list.id === state.updatingListID
+        (list) => list.id === state.updatingListInfo.id
       );
       state.currentBoard.lists[listIndex].items.push(payload);
       localStorage.setItem(
@@ -104,9 +122,10 @@ const boardsSlice = createSlice({
 
 export const {
   updateBoardName,
+  updateListName,
   toggleBoardMark,
   initialBoards,
-  setUpdatingListID,
+  setUpdatingListInfo,
   addNewTask,
 } = boardsSlice.actions;
 export default boardsSlice.reducer;
