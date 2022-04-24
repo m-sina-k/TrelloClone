@@ -14,6 +14,13 @@
   font-style: normal;
   font-weight: bold;
 }
+textarea {
+  resize: none;
+}
+input:focus,
+textarea:focus {
+  outline: none !important;
+}
 
 body {
   min-height: 100vh;
@@ -60,6 +67,14 @@ body {
   background-color: white;
   color: black;
   outline: none;
-   border: 3px solid royalblue;
-   cursor: text;
+  border: 3px solid royalblue;
+  cursor: text;
+}
+
+.lists-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 300px);
+  grid-column-gap: 10px;
+  overflow-x: auto;
+  max-width: 100%;
 }

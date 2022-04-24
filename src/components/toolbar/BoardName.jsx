@@ -8,7 +8,7 @@ const BoardName = ({ boardName, setBoardName }) => {
   const measurer = useRef();
   const [visible, setVisible] = useState(false);
   const [width, setWidth] = useState(0);
-  const EXTRA_SPACE = 15;
+  const EXTRA_SPACE = 10;
 
   useEffect(() => {
     setVisible(true);

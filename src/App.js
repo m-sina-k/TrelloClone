@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import Toolbar from "components/Toolbar";
 import Setting from "components/setting/Setting";
+import Lists from "components/lists/Lists";
 
 export default function App() {
   const { showSettingSidebar, activeBackground } = useSelector(
@@ -24,6 +25,7 @@ export default function App() {
     >
       <Toolbar />
       <Setting />
+      <Lists />
     </div>
   );
 }

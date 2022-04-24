@@ -5,6 +5,6 @@ import boardsState from './slices/boardsSlice'
 export const store = configureStore({
   reducer: {
     uiState,
-    boardsState
+    boardsState,
   },
 });

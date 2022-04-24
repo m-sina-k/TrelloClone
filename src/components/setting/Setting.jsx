@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Transition } from "react-transition-group";
-import { useDetectClickOutside } from "react-detect-click-outside";
+import { useOnClickOutside } from "hooks/useClickOutside";
 import { setShowSettingSidebar } from "features/slices/uiSlice";
 import SettingItem, { SubcategoryHeading } from "./components/SettingItem";
 import AppearanceTab from "./AppearanceTab";
@@ -15,16 +15,15 @@ const Setting = () => {
   const [activeSettingTab, setActiveSettingTab] = useState("main");
   const SLIDE_ANIMATION_DURATION = 300;
 
-  const closeSettingSidebar = (e) => {
-    if (!e.target.classList.contains("setting-button")) {
+  // close setting sidebar on click outside
+  const settingSidebarRef = useRef();
+  const closeSettingSidebar = () => {
+    if(showSettingSidebar){
       setActiveSettingTab("main");
-      dispatch(setShowSettingSidebar(false));
+    dispatch(setShowSettingSidebar(false));
     }
   };
-
-  const settingSidebarRef = useDetectClickOutside({
-    onTriggered: closeSettingSidebar,
-  });
+  useOnClickOutside(settingSidebarRef, closeSettingSidebar);
 
   const defaultStyle = {
     transition: ` all ${SLIDE_ANIMATION_DURATION}ms linear`,

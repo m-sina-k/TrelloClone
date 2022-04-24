@@ -16,6 +16,7 @@ const Dropdown = ({ type }) => {
       avatarBgColor: "bg-amber-500",
     },
   ];
+  
 
   const renderDropdown = () => {
     switch (type) {
@@ -53,7 +54,7 @@ const Dropdown = ({ type }) => {
         animate={{ scale: [0, 1, 0.93, 1] }}
         exit={{ scale: 0 }}
         transition={{ duration: 0.5 }}
-        className="absolute top-10 right-0 w-60 py-3 px-1 rounded-lg bg-bgColor text-textColor shadow-lg"
+        className="z-50 absolute top-10 right-0 w-60 p-1.5 rounded-lg bg-bgColor text-textColor shadow-lg"
       >
         {renderDropdown()}
       </motion.div>
