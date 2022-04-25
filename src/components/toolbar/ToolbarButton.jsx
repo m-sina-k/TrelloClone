@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useOnClickOutside } from "hooks/useClickOutside";
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveDropdown } from "features/slices/uiSlice";
-import Dropdown from "components/Dropdown";
+import Dropdown from "components/toolbar/Dropdown";
 
 import { MdKeyboardArrowDown } from "react-icons/md";
 

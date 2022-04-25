@@ -43,7 +43,7 @@ const AddTask = () => {
       <textarea
         type="text"
         placeholder="عنوان کار جدید..."
-        className="bg-white rounded shadow-sm h-16 w-full p-2 mb-1 text-xs"
+        className="bg-white rounded shadow-sm h-16 w-full p-2 mb-1 text-xs border-2 focus:border-blue-700"
         autoFocus
         value={newTaskTitle}
         onChange={(e) => setNewTaskTitle(e.target.value)}

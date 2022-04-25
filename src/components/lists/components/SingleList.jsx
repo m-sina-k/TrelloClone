@@ -35,7 +35,7 @@ const SingleList = ({ list }) => {
   };
 
   return (
-    <article className="rounded shadow bg-light py-2 pr-3 pl-2 h-max">
+    <article className="rounded shadow bg-light py-2 pr-3 pl-2 h-max min-w-[285px]">
       {/* list heading */}
       <section className="flex items-center justify-between pb-2 border-lightShade border-b-2 mb-2">
         <input
@@ -66,7 +66,7 @@ const SingleList = ({ list }) => {
               type="text"
               value={item.title}
               onChange={() => {}}
-              className="bg-white p-1.5 h-full flex-1 text-textColor"
+              className="bg-bgColor p-1.5 h-full flex-1 text-textColor"
             />
             <span className="absolute z-10 top-1 left-1 cursor-pointer p-1.5 transition-all duration-100 rounded hover:bg-light">
               <FiEdit size={12} />

@@ -21,6 +21,10 @@ const initialState = {
     value: "#82ccdd",
   },
   showSettingSidebar: false,
+  showBackdrop:false,
+  lockBodyScroll:false,
+  // getting tooblar heigth to calculate lists container heigth (100vh - toolbarHeight)
+  toolbarHeight:null,
 };
 
 const uiSlice = createSlice({
@@ -38,6 +42,13 @@ const uiSlice = createSlice({
       state.activeBackground = payload;
       localStorage.setItem("theme", JSON.stringify(payload));
     },
+    setShowBackdrop:(state,{payload})=>{
+      state.showBackdrop = payload;
+      state.lockBodyScroll = payload
+    },
+    setToolbarHeight:(state,{payload})=>{
+      state.toolbarHeight = payload
+    }
   },
 });
 
@@ -45,5 +56,7 @@ export const {
   setActiveDropdown,
   setShowSettingSidebar,
   changeThemeBackground,
+  setShowBackdrop,
+  setToolbarHeight
 } = uiSlice.actions;
 export default uiSlice.reducer;

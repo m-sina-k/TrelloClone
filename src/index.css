@@ -34,6 +34,7 @@ body {
   -o-transition: all 0.3s ease;
 }
 
+
 @layer components {
   .toolbar-button {
     @apply px-3 py-1 cursor-pointer rounded flex items-center text-white text-sm hover:bg-lightWhite;
@@ -41,6 +42,25 @@ body {
   .setting-sidebar {
     @apply fixed flex flex-col top-0 left-[-320px] w-80 h-full bg-bgColor p-5 overflow-hidden;
   }
+}
+
+.lists-container::-webkit-scrollbar {
+  height: 0.65em;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+}
+
+.lists-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
 }
 
 .setting-option--active {
@@ -71,10 +91,3 @@ body {
   cursor: text;
 }
 
-.lists-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 300px);
-  grid-column-gap: 10px;
-  overflow-x: auto;
-  max-width: 100%;
-}

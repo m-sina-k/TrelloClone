@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import Toolbar from "components/Toolbar";
+import Toolbar from "components/toolbar/Toolbar";
 import Setting from "components/setting/Setting";
 import Lists from "components/lists/Lists";
+import Backdrop from "components/Backdrop";
 
 export default function App() {
-  const { showSettingSidebar, activeBackground } = useSelector(
+  const { showSettingSidebar, activeBackground, showBackdrop } = useSelector(
     (state) => state.uiState
   );
 
@@ -23,6 +24,7 @@ export default function App() {
         showSettingSidebar ? "ml-[320px]" : ""
       }`}
     >
+      <Backdrop isActive={showBackdrop} />
       <Toolbar />
       <Setting />
       <Lists />

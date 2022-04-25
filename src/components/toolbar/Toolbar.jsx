@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { setShowSettingSidebar } from "features/slices/uiSlice";
 import { toggleBoardMark } from "features/slices/boardsSlice";
-import BoardName from "./toolbar/BoardName";
-import ToolbarButton from "./toolbar/ToolbarButton";
+import { setToolbarHeight } from "features/slices/uiSlice";
+import BoardName from "./BoardName";
+import ToolbarButton from "./ToolbarButton";
 import logo from "assets/images/logo.png";
 
 // icon's
 import { TiStarOutline, TiStar, TiClipboard } from "react-icons/ti";
-import { BiMessageSquareAdd, BiFilterAlt } from "react-icons/bi";
+import { BiFilterAlt } from "react-icons/bi";
 import { RiUserSharedLine } from "react-icons/ri";
 import { HiOutlineCog } from "react-icons/hi";
 
@@ -17,14 +18,19 @@ const Toolbar = () => {
   const { showSettingSidebar } = useSelector((state) => state.uiState);
   const { currentBoard } = useSelector((state) => state.boardsState);
   const dispatch = useDispatch();
-
+  const toolbarRef = useRef();
   const [boardName, setBoardName] = useState(currentBoard.name);
+
+  useEffect(() => {
+    dispatch(setToolbarHeight(toolbarRef.current.clientHeight));
+  }, [dispatch]);
 
   return (
     <motion.nav
       animate={{ opacity: [0, 1] }}
       transition={{ duration: 0.5, ease: "easeIn", delay: 0.3 }}
       className="p-3 shadow-md bg-lightBlack"
+      ref={toolbarRef}
     >
       <div className="flex items-center justify-between">
         {/* right block item's */}
@@ -50,17 +56,16 @@ const Toolbar = () => {
             </span>
           </section>
           <ToolbarButton text="تخته ها" icon={TiClipboard} dropdown="boards" />
-          <ToolbarButton text="افزودن لیست جدید" icon={BiMessageSquareAdd} />
-          <ToolbarButton text="اشتراک گذاری" icon={RiUserSharedLine} />
-        </div>
-
-        {/* left block item's */}
-        <div className="flex space-x-2">
           <ToolbarButton
             text="فیلتر ها"
             icon={BiFilterAlt}
             additionalClass="py-2"
           />
+          <ToolbarButton text="اشتراک گذاری" icon={RiUserSharedLine} />
+        </div>
+
+        {/* left block item's */}
+        <div className="flex space-x-2">
           <ToolbarButton
             text="تنظیمات"
             icon={HiOutlineCog}

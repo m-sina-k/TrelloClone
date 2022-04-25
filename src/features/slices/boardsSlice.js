@@ -78,7 +78,7 @@ const boardsSlice = createSlice({
       );
       state.currentBoard.lists[editedListIndex].name = payload;
 
-      state.boards = [...state.boards,state.currentBoard]
+      state.boards = [...state.boards, state.currentBoard];
       localStorage.setItem(
         "boards",
         JSON.stringify({
@@ -117,6 +117,18 @@ const boardsSlice = createSlice({
         })
       );
     },
+    crateNewList: (state, { payload }) => {
+      state.currentBoard.lists.push(payload);
+      const tempBoards = state.boards.filter(board=>board.id !== state.currentBoard.id)
+      state.boards = [...tempBoards,state.currentBoard]
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
   },
 });
 
@@ -127,5 +139,6 @@ export const {
   initialBoards,
   setUpdatingListInfo,
   addNewTask,
+  crateNewList,
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

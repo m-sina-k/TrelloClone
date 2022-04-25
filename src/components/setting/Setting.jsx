@@ -73,7 +73,7 @@ const Setting = () => {
   return (
     <aside
       className={`fixed max-h-full overflow-y-auto flex flex-col top-0 left-[-320px] w-80 h-full bg-bgColor overflow-hidden transition-all duration-300 ${
-        showSettingSidebar ? "left-0" : ""
+        showSettingSidebar ? "left-[0]" : ""
       }`}
       ref={settingSidebarRef}
     >
