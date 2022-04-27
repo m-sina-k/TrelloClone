@@ -1,13 +1,14 @@
 import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
 import { crateNewList } from "features/slices/boardsSlice";
 import { useOnClickOutside } from "hooks/useClickOutside";
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from "uuid";
 
 import { HiPlus } from "react-icons/hi";
 import { RiCloseFill } from "react-icons/ri";
 
-const AddNewList = () => {
+const AddNewList = ({ listsLength }) => {
   const dispatch = useDispatch();
   const [showAddInput, setShowAddInput] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
@@ -23,17 +24,22 @@ const AddNewList = () => {
   const addNewList = () => {
     if (newListTitle.trim() !== "") {
       const newList = {
-        id:uuidv4(),
-        name:newListTitle,
-        items:[]
-      }
-      dispatch(crateNewList(newList))
-      setNewListTitle('')
+        id: uuidv4(),
+        name: newListTitle,
+        items: [],
+      };
+      dispatch(crateNewList(newList));
+      setNewListTitle("");
     }
   };
 
   return (
-    <article className="rounded shadow bg-whiteHover min-w-[285px] h-max">
+    <motion.article
+      initial={{ opacity: 0, translateY: -50 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{ duration: 0.5, delay: listsLength * 0.2 }}
+      className="rounded shadow bg-whiteHover min-w-[285px] h-max"
+    >
       {showAddInput ? (
         <section className="py-3 px-2" ref={addInputContainerRef}>
           {/* add list input */}
@@ -73,7 +79,7 @@ const AddNewList = () => {
           <span className="text-sm mr-2">افزودن لیست جدید</span>
         </section>
       )}
-    </article>
+    </motion.article>
   );
 };
 

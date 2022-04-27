@@ -3,16 +3,20 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   setUpdatingListInfo,
   updateListName,
+  setActivePropertyListID,
 } from "features/slices/boardsSlice";
 import { motion } from "framer-motion";
 import AddTask from "./AddTask";
+import ListProperties from "./ListProperties";
 
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { FiEdit } from "react-icons/fi";
 import { HiPlus } from "react-icons/hi";
 
 const SingleList = ({ list }) => {
-  const { updatingListInfo } = useSelector((state) => state.boardsState);
+  const { updatingListInfo, activePropertyListID } = useSelector(
+    (state) => state.boardsState
+  );
   const dispatch = useDispatch();
   const listNameInputRef = useRef();
   const [newListName, setNewListName] = useState(list.name);
@@ -22,11 +26,11 @@ const SingleList = ({ list }) => {
   };
 
   const changeListName = () => {
-    if (newListName.trim() !== '') {
+    if (newListName.trim() !== "") {
       dispatch(setUpdatingListInfo({ type: "updateName", id: list.id }));
       dispatch(updateListName(newListName));
-    }else{
-      setNewListName(list.name)
+    } else {
+      setNewListName(list.name);
     }
   };
 
@@ -47,9 +51,17 @@ const SingleList = ({ list }) => {
           onBlur={changeListName}
           onKeyUp={(e) => inputEnter(e)}
         />
-        <span className="cursor-pointer p-1 transition-all duration-100 rounded hover:bg-lightShade">
-          <BiDotsHorizontalRounded />
-        </span>
+
+        {/* list property relative container */}
+        <section
+          className="relative inline-flex"
+          onClick={() => dispatch(setActivePropertyListID(list.id))}
+        >
+          <span className=" cursor-pointer p-1 transition-all duration-100 rounded hover:bg-lightShade">
+            <BiDotsHorizontalRounded />
+          </span>
+          {activePropertyListID === list.id && <ListProperties listID={list.id} />}
+        </section>
       </section>
 
       {/* list items */}
@@ -76,10 +88,9 @@ const SingleList = ({ list }) => {
       </ul>
 
       {list.id === updatingListInfo?.id &&
-        updatingListInfo?.type === "addTask" && <AddTask />}
-
-      {/* add new task */}
-      {!((list.id === updatingListInfo?.type) === "addTask") && (
+      updatingListInfo?.type === "addTask" ? (
+        <AddTask />
+      ) : (
         <button
           className="mt-2 flex items-center text-sm p-1.5 w-full rounded transition-all duration-200 text-textColor hover:bg-lightShade hover:text-black"
           onClick={() =>
