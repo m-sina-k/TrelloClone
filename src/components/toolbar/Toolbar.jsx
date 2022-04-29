@@ -9,10 +9,11 @@ import ToolbarButton from "./ToolbarButton";
 import logo from "assets/images/logo.png";
 
 // icon's
-import { TiStarOutline, TiStar, TiClipboard } from "react-icons/ti";
+import { TiStarOutline, TiStar } from "react-icons/ti";
 import { BiFilterAlt } from "react-icons/bi";
 import { RiUserSharedLine } from "react-icons/ri";
 import { HiOutlineCog } from "react-icons/hi";
+import { BsClipboardPlus, BsClipboard } from "react-icons/bs";
 
 const Toolbar = () => {
   const { showSettingSidebar } = useSelector((state) => state.uiState);
@@ -20,6 +21,11 @@ const Toolbar = () => {
   const dispatch = useDispatch();
   const toolbarRef = useRef();
   const [boardName, setBoardName] = useState(currentBoard.name);
+
+  // update board name when switch between boards
+  useEffect(() => {
+    setBoardName(currentBoard.name);
+  }, [currentBoard]);
 
   useEffect(() => {
     dispatch(setToolbarHeight(toolbarRef.current.clientHeight));
@@ -55,17 +61,22 @@ const Toolbar = () => {
               )}
             </span>
           </section>
-          <ToolbarButton text="تخته ها" icon={TiClipboard} dropdown="boards" />
+          <ToolbarButton text="تخته ها" icon={BsClipboard} dropdown="boards" />
           <ToolbarButton
-            text="فیلتر ها"
-            icon={BiFilterAlt}
-            additionalClass="py-2"
+            text="تخته جدید"
+            icon={BsClipboardPlus}
+            dropdown="createBoard"
           />
           <ToolbarButton text="اشتراک گذاری" icon={RiUserSharedLine} />
         </div>
 
         {/* left block item's */}
         <div className="flex space-x-2">
+          <ToolbarButton
+            text="فیلتر ها"
+            icon={BiFilterAlt}
+            additionalClass="py-2"
+          />
           <ToolbarButton
             text="تنظیمات"
             icon={HiOutlineCog}

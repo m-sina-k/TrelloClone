@@ -7,7 +7,6 @@ const initialState = {
   updatingListInfo: null,
   boards: LS_boards?.boardsList || null,
   currentBoard: LS_boards?.currentBoard || null,
-  activePropertyListID:null,
 };
 
 const boardsSlice = createSlice({
@@ -19,6 +18,7 @@ const boardsSlice = createSlice({
         id: uuidV4(),
         name: "تخته شماره ۱",
         isMarked: false,
+        avatarBg: "#6D214F",
         lists: [
           {
             id: uuidV4(),
@@ -120,8 +120,10 @@ const boardsSlice = createSlice({
     },
     crateNewList: (state, { payload }) => {
       state.currentBoard.lists.push(payload);
-      const tempBoards = state.boards.filter(board=>board.id !== state.currentBoard.id)
-      state.boards = [...tempBoards,state.currentBoard]
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      state.boards = [...tempBoards, state.currentBoard];
       localStorage.setItem(
         "boards",
         JSON.stringify({
@@ -130,13 +132,13 @@ const boardsSlice = createSlice({
         })
       );
     },
-    setActivePropertyListID:(state,{payload})=>{
-      state.activePropertyListID = payload
-    },
-    deleteList:(state,{payload})=>{
-      const tempLists = state.currentBoard.lists.filter(list=>list.id !== payload);
-      state.currentBoard.lists= tempLists;
-      state.boards.find(board=>board.id === state.currentBoard.id).lists = state.currentBoard.lists;
+    deleteList: (state, { payload }) => {
+      const tempLists = state.currentBoard.lists.filter(
+        (list) => list.id !== payload
+      );
+      state.currentBoard.lists = tempLists;
+      state.boards.find((board) => board.id === state.currentBoard.id).lists =
+        state.currentBoard.lists;
       localStorage.setItem(
         "boards",
         JSON.stringify({
@@ -144,7 +146,27 @@ const boardsSlice = createSlice({
           currentBoard: state.currentBoard,
         })
       );
-    }
+    },
+    createBoard: (state, { payload }) => {
+      state.boards.push(payload);
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
+    switchBoard: (state, { payload }) => {
+      state.currentBoard = state.boards.find((board) => (board.id === payload));
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
   },
 });
 
@@ -156,7 +178,8 @@ export const {
   setUpdatingListInfo,
   addNewTask,
   crateNewList,
-  setActivePropertyListID,
-  deleteList
+  createBoard,
+  deleteList,
+  switchBoard,
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

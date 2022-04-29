@@ -10,7 +10,7 @@ const Lists = () => {
   return (
     // lists container
     <div className="lists-container flex overflow-x-auto mx-auto mt-1 py-1.5 px-5 gap-2" style={{height:`calc(100vh - ${toolbarHeight +5}px)`}}>
-      {currentBoard.lists.map((list, index) => (
+      {currentBoard.lists?.map((list, index) => (
         <motion.div
           key={list.id}
           initial={{ opacity: 0, translateY: -50 }}
@@ -20,7 +20,7 @@ const Lists = () => {
           <SingleList list={list} key={list.id} />
         </motion.div>
       ))}
-      <AddNewList listsLength={currentBoard.lists.length}/>
+      <AddNewList listsLength={currentBoard.lists?.length}/>
     </div>
   );
 };

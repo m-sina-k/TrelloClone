@@ -6,7 +6,6 @@ import bg3 from "assets/images/backgrounds/bg-03.jpg";
 import bg4 from "assets/images/backgrounds/bg-04.jpg";
 
 const initialState = {
-  activeDropdown: null,
   themeColors: [
     "#82ccdd",
     "#F0E68C",
@@ -15,26 +14,35 @@ const initialState = {
     "#B33771",
     "#2ecc71",
   ],
+  avatarBgColors : [
+    "#34495e",
+    "#3498db",
+    "#2ecc71",
+    "#d35400",
+    "#6D214F",
+    "#EA2027",
+  ],
   themeBackgrounds: [bg1, bg2, bg3, bg4],
   activeBackground: JSON.parse(localStorage.getItem("theme")) || {
     type: "color",
     value: "#82ccdd",
   },
   showSettingSidebar: false,
-  showBackdrop:false,
-  lockBodyScroll:false,
+  showBackdrop: false,
+  lockBodyScroll: false,
   // getting tooblar heigth to calculate lists container heigth (100vh - toolbarHeight)
-  toolbarHeight:null,
+  toolbarHeight: null,
+  alertConfig: {
+    message: null,
+    isActive: false,
+    callBackName: null,
+  },
 };
 
 const uiSlice = createSlice({
   name: "uiSlice",
   initialState,
   reducers: {
-    setActiveDropdown: (state, { payload }) => {
-      if (state.activeDropdown === payload) state.activeDropdown = null;
-      else state.activeDropdown = payload;
-    },
     setShowSettingSidebar: (state, { payload }) => {
       state.showSettingSidebar = payload;
     },
@@ -42,21 +50,24 @@ const uiSlice = createSlice({
       state.activeBackground = payload;
       localStorage.setItem("theme", JSON.stringify(payload));
     },
-    setShowBackdrop:(state,{payload})=>{
+    setShowBackdrop: (state, { payload }) => {
       state.showBackdrop = payload;
-      state.lockBodyScroll = payload
+      state.lockBodyScroll = payload;
     },
-    setToolbarHeight:(state,{payload})=>{
-      state.toolbarHeight = payload
-    }
+    setToolbarHeight: (state, { payload }) => {
+      state.toolbarHeight = payload;
+    },
+    setAlertConfig: (state, { payload }) => {
+      state.alertConfig = payload;
+    },
   },
 });
 
 export const {
-  setActiveDropdown,
   setShowSettingSidebar,
   changeThemeBackground,
   setShowBackdrop,
-  setToolbarHeight
+  setToolbarHeight,
+  setAlertConfig,
 } = uiSlice.actions;
 export default uiSlice.reducer;

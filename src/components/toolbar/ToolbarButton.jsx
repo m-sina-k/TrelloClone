@@ -1,8 +1,6 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { useOnClickOutside } from "hooks/useClickOutside";
-import { useSelector, useDispatch } from "react-redux";
-import { setActiveDropdown } from "features/slices/uiSlice";
-import Dropdown from "components/toolbar/Dropdown";
+import Dropdown from "components/toolbar/dropdown";
 
 import { MdKeyboardArrowDown } from "react-icons/md";
 
@@ -13,38 +11,31 @@ const ToolbarButton = ({
   dropdown,
   callback,
 }) => {
-  const { activeDropdown } = useSelector((state) => state.uiState);
-  const dispatch = useDispatch();
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const dropdownRef = useRef();
-  useOnClickOutside(dropdownRef, () => dispatch(setActiveDropdown(null)));
+  useOnClickOutside(dropdownRef, () => setShowDropdown(false));
 
   return dropdown ? (
-    <section ref={dropdownRef}>
-      {/* relative container */}
-      <section className="relative flex items-center">
-        {/* dropdown button */}
-        <span
-          className={`toolbar-button py-2 ${
-            additionalClass ? additionalClass : ""
+    <section className="relative flex items-center" ref={dropdownRef}>
+      {/* dropdown button */}
+      <span
+        className={`toolbar-button py-2 ${
+          additionalClass ? additionalClass : ""
+        }`}
+        onClick={() => setShowDropdown(!showDropdown)}
+      >
+        {Icon && <Icon size={18} className="ml-1" />}
+        <span>{text}</span>
+        <MdKeyboardArrowDown
+          size={18}
+          className={`mr-1 transition-all duration-200 ${
+            showDropdown ? "rotate-180" : ""
           }`}
-          data-dropdown={dropdown}
-          onClick={(e) =>
-            dispatch(setActiveDropdown(e.currentTarget.dataset.dropdown))
-          }
-        >
-          {Icon && <Icon size={18} className="ml-1" />}
-          <span>{text}</span>
-          <MdKeyboardArrowDown
-            size={18}
-            className={`mr-1 transition-all duration-200 ${
-              activeDropdown === dropdown ? "rotate-180" : ""
-            }`}
-          />
-        </span>
-        {/* dropdown component */}
-        {activeDropdown === dropdown && <Dropdown type="boards" />}
-      </section>
+        />
+      </span>
+      {/* dropdown component */}
+      {showDropdown && <Dropdown type={dropdown} setShowDropdown={setShowDropdown} />}
     </section>
   ) : (
     <span

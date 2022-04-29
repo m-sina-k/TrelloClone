@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   setUpdatingListInfo,
   updateListName,
-  setActivePropertyListID,
 } from "features/slices/boardsSlice";
 import { motion } from "framer-motion";
+import { useOnClickOutside } from "hooks/useClickOutside";
 import AddTask from "./AddTask";
 import ListProperties from "./ListProperties";
 
@@ -13,8 +13,9 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { FiEdit } from "react-icons/fi";
 import { HiPlus } from "react-icons/hi";
 
+
 const SingleList = ({ list }) => {
-  const { updatingListInfo, activePropertyListID } = useSelector(
+  const { updatingListInfo } = useSelector(
     (state) => state.boardsState
   );
   const dispatch = useDispatch();
@@ -38,6 +39,10 @@ const SingleList = ({ list }) => {
     if (e.keyCode === 13) listNameInputRef.current.blur();
   };
 
+  const [showPropertiesList, setShowPropertiesList] = useState(false);
+  const propertiesListRef = useRef();
+  useOnClickOutside(propertiesListRef, () => setShowPropertiesList(false));
+
   return (
     <article className="rounded shadow bg-light py-2 pr-3 pl-2 h-max min-w-[285px]">
       {/* list heading */}
@@ -49,18 +54,23 @@ const SingleList = ({ list }) => {
           className="text-sm w-full bg-transparent rounded p-[3px] border-2 focus:border-blue-700 focus:bg-white"
           onChange={(e) => setNewListName(e.target.value)}
           onBlur={changeListName}
-          onKeyUp={(e) => inputEnter(e)}
+          onKeyUp={inputEnter}
         />
 
         {/* list property relative container */}
-        <section
-          className="relative inline-flex"
-          onClick={() => dispatch(setActivePropertyListID(list.id))}
-        >
-          <span className=" cursor-pointer p-1 transition-all duration-100 rounded hover:bg-lightShade">
+        <section className="relative inline-flex" ref={propertiesListRef}>
+          <span
+            className=" cursor-pointer p-1 transition-all duration-100 rounded hover:bg-lightShade"
+            onClick={() => setShowPropertiesList(!showPropertiesList)}
+          >
             <BiDotsHorizontalRounded />
           </span>
-          {activePropertyListID === list.id && <ListProperties listID={list.id} />}
+          {showPropertiesList && (
+            <ListProperties
+              listID={list.id}
+              setShowPropertiesList={setShowPropertiesList}
+            />
+          )}
         </section>
       </section>
 

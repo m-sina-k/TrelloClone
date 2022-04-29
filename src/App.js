@@ -5,6 +5,7 @@ import Toolbar from "components/toolbar/Toolbar";
 import Setting from "components/setting/Setting";
 import Lists from "components/lists/Lists";
 import Backdrop from "components/Backdrop";
+import Alert from "components/Alert";
 
 export default function App() {
   const { showSettingSidebar, activeBackground, showBackdrop } = useSelector(
@@ -24,6 +25,7 @@ export default function App() {
         showSettingSidebar ? "ml-[320px]" : ""
       }`}
     >
+      <Alert/>
       <Backdrop isActive={showBackdrop} />
       <Toolbar />
       <Setting />
