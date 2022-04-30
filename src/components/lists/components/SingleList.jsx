@@ -4,20 +4,16 @@ import {
   setUpdatingListInfo,
   updateListName,
 } from "features/slices/boardsSlice";
-import { motion } from "framer-motion";
 import { useOnClickOutside } from "hooks/useClickOutside";
 import AddTask from "./AddTask";
 import ListProperties from "./ListProperties";
+import TaskCard from "./TaskCard";
 
 import { BiDotsHorizontalRounded } from "react-icons/bi";
-import { FiEdit } from "react-icons/fi";
 import { HiPlus } from "react-icons/hi";
 
-
 const SingleList = ({ list }) => {
-  const { updatingListInfo } = useSelector(
-    (state) => state.boardsState
-  );
+  const { updatingListInfo } = useSelector((state) => state.boardsState);
   const dispatch = useDispatch();
   const listNameInputRef = useRef();
   const [newListName, setNewListName] = useState(list.name);
@@ -68,6 +64,7 @@ const SingleList = ({ list }) => {
           {showPropertiesList && (
             <ListProperties
               listID={list.id}
+              listName={list.name}
               setShowPropertiesList={setShowPropertiesList}
             />
           )}
@@ -77,23 +74,7 @@ const SingleList = ({ list }) => {
       {/* list items */}
       <ul>
         {list.items.map((item) => (
-          <motion.li
-            key={item.id}
-            className="relative flex items-center justify-between overflow-hidden rounded mb-1.5 shadow-sm text-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <input
-              type="text"
-              value={item.title}
-              onChange={() => {}}
-              className="bg-bgColor p-1.5 h-full flex-1 text-textColor"
-            />
-            <span className="absolute z-10 top-1 left-1 cursor-pointer p-1.5 transition-all duration-100 rounded hover:bg-light">
-              <FiEdit size={12} />
-            </span>
-          </motion.li>
+          <TaskCard key={item.id} item={item} listID={list.id} />
         ))}
       </ul>
 

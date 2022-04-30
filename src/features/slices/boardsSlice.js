@@ -167,6 +167,21 @@ const boardsSlice = createSlice({
         })
       );
     },
+    editTaskTitle:(state,{payload})=>{
+      const editingList = state.currentBoard.lists.find(list=>list.id === state.updatingListInfo)
+      const editingTask = editingList.items.find(item=>item.id === payload.id)
+      editingTask.title = payload.title;
+
+      const tempBoards = state.boards.filter(board=>board.id !== state.currentBoard.id)
+      state.boards = [...tempBoards,state.currentBoard]
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    }
   },
 });
 
@@ -181,5 +196,6 @@ export const {
   createBoard,
   deleteList,
   switchBoard,
+  editTaskTitle
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

@@ -1,6 +1,6 @@
 const Backdrop = ({ isActive }) => {
   const bgStyle = {
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     backdropFilter: "blur(2px)",
   };
 

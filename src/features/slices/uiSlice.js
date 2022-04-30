@@ -14,7 +14,7 @@ const initialState = {
     "#B33771",
     "#2ecc71",
   ],
-  avatarBgColors : [
+  avatarBgColors: [
     "#34495e",
     "#3498db",
     "#2ecc71",
@@ -35,7 +35,10 @@ const initialState = {
   alertConfig: {
     message: null,
     isActive: false,
-    callBackName: null,
+    callback: {
+      name: null,
+      payload: null,
+    },
   },
 };
 
