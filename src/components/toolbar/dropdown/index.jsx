@@ -1,12 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
-import ListsDd from "./ListsDd";
+import BoardsList from "./BoardsList";
 import NewBoardDd from "./NewBoardDd";
 
 const Dropdown = ({ type, setShowDropdown }) => {
   const renderDropdown = () => {
     switch (type) {
       case "boards":
-        return <ListsDd setShowDropdown={setShowDropdown}/>;
+        return <BoardsList setShowDropdown={setShowDropdown}/>;
       case "createBoard":
         return <NewBoardDd setShowDropdown={setShowDropdown} />;
     }

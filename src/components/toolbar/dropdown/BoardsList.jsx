@@ -3,17 +3,18 @@ import { switchBoard } from "features/slices/boardsSlice";
 
 import { TiStar } from "react-icons/ti";
 
-const ListsDd = ({ setShowDropdown }) => {
+const BoardsList = ({ setShowDropdown }) => {
   const dispatch = useDispatch();
   const { boards, currentBoard } = useSelector((state) => state.boardsState);
   const changeBoard = (id) => {
     dispatch(switchBoard(id));
     setShowDropdown(false);
   };
+  const boardsList = [...boards].reverse()
 
   return (
     <ul>
-      {boards.map(({ id, name, avatarBg, isMarked }) => (
+      {boardsList.map(({ id, name, avatarBg, isMarked }) => (
         <li
           key={id}
           className={`flex items-center py-1.5 px-1 mb-1 rounded cursor-pointer hover:bg-whiteHover ${
@@ -35,4 +36,4 @@ const ListsDd = ({ setShowDropdown }) => {
   );
 };
 
-export default ListsDd;
+export default BoardsList;

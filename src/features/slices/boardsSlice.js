@@ -5,6 +5,7 @@ const LS_boards = JSON.parse(localStorage.getItem("boards"));
 
 const initialState = {
   updatingListInfo: null,
+  editingTask: null,
   boards: LS_boards?.boardsList || null,
   currentBoard: LS_boards?.currentBoard || null,
 };
@@ -158,7 +159,7 @@ const boardsSlice = createSlice({
       );
     },
     switchBoard: (state, { payload }) => {
-      state.currentBoard = state.boards.find((board) => (board.id === payload));
+      state.currentBoard = state.boards.find((board) => board.id === payload);
       localStorage.setItem(
         "boards",
         JSON.stringify({
@@ -167,13 +168,40 @@ const boardsSlice = createSlice({
         })
       );
     },
-    editTaskTitle:(state,{payload})=>{
-      const editingList = state.currentBoard.lists.find(list=>list.id === state.updatingListInfo)
-      const editingTask = editingList.items.find(item=>item.id === payload.id)
-      editingTask.title = payload.title;
-
-      const tempBoards = state.boards.filter(board=>board.id !== state.currentBoard.id)
-      state.boards = [...tempBoards,state.currentBoard]
+    editTaskTitle: (state, { payload }) => {
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+      const editingList = state.currentBoard.lists[editingListIndex];
+      const editingTaskIndex = editingList.items.findIndex(
+        (item) => item.id === payload.id
+      );
+      editingList.items[editingTaskIndex].title = payload.title;
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
+    setEditingTask: (state, { payload }) => {
+      state.editingTask = payload;
+    },
+    deleteTask:(state,{payload})=>{
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+      const editingListItems = state.currentBoard.lists[editingListIndex].items
+      state.currentBoard.lists[editingListIndex].items = editingListItems.filter(item=>item.id !== payload);
+      state.boards = [...tempBoards, state.currentBoard];
       localStorage.setItem(
         "boards",
         JSON.stringify({
@@ -196,6 +224,8 @@ export const {
   createBoard,
   deleteList,
   switchBoard,
-  editTaskTitle
+  editTaskTitle,
+  setEditingTask,
+  deleteTask
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

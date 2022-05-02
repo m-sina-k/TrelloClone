@@ -74,7 +74,7 @@ const SingleList = ({ list }) => {
       {/* list items */}
       <ul>
         {list.items.map((item) => (
-          <TaskCard key={item.id} item={item} listID={list.id} />
+          <TaskCard key={item.id} item={item} list={list} />
         ))}
       </ul>
 

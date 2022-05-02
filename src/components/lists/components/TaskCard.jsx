@@ -1,21 +1,27 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { setShowBackdrop } from "features/slices/uiSlice";
 import {
   editTaskTitle,
   setUpdatingListInfo,
+  setEditingTask,
 } from "features/slices/boardsSlice";
 import { useOnClickOutside } from "hooks/useClickOutside";
 import TextareaAutosize from "react-textarea-autosize";
 
 import { FiEdit } from "react-icons/fi";
 
-const TaskCard = ({ item, listID }) => {
+const TaskCard = ({ item, list }) => {
   const dispatch = useDispatch();
   const inputRef = useRef();
   const [taskTitle, setTaskTitle] = useState(item.title);
   const [editingModeEnabled, setEditingModeEnabled] = useState(false);
+
+  // update task title if change by task properties popup
+  useEffect(() => {
+    setTaskTitle(item.title);
+  }, [item.title]);
 
   const activateEditingMode = () => {
     if (!editingModeEnabled) {
@@ -34,9 +40,17 @@ const TaskCard = ({ item, listID }) => {
     }
   };
 
+  // prevent input focus on click
   const handleTaskTitleInputClick = (e) => {
-    if (!editingModeEnabled) e.preventDefault();
-    else return;
+    e.preventDefault();
+  };
+
+  const openTaskProperties = () => {
+    if (!editingModeEnabled) {
+      dispatch(setShowBackdrop(true));
+      dispatch(setEditingTask(item));
+      dispatch(setUpdatingListInfo(list));
+    }
   };
 
   const disableInputEnter = (e) => {
@@ -59,9 +73,10 @@ const TaskCard = ({ item, listID }) => {
   };
 
   const fireEditTaskTitle = () => {
-    dispatch(setUpdatingListInfo(listID));
+    dispatch(setUpdatingListInfo(list));
     dispatch(editTaskTitle({ id: item.id, title: taskTitle }));
     disableEditingMode();
+    dispatch(setUpdatingListInfo(null));
   };
 
   const editBoxRef = useRef();
@@ -87,8 +102,9 @@ const TaskCard = ({ item, listID }) => {
           className={`rounded w-full h-full flex p-1.5 text-textColor cursor-pointer transition-all duration-150 overflow-y-auto focus:cursor-text`}
           onMouseDown={(e) => handleTaskTitleInputClick(e)}
           onChange={(e) => setTaskTitle(e.target.value)}
-          onFocus={() => inputRef.current.select()}
           onKeyDown={(e) => disableInputEnter(e)}
+          onFocus={() => inputRef.current.select()}
+          onClick={openTaskProperties}
         />
         {/* save edited title button */}
         {editingModeEnabled && (

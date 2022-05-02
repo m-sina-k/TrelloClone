@@ -6,11 +6,13 @@ import Setting from "components/setting/Setting";
 import Lists from "components/lists/Lists";
 import Backdrop from "components/Backdrop";
 import Alert from "components/Alert";
+import TaskProperties from "components/lists/components/task-properties";
 
 export default function App() {
   const { showSettingSidebar, activeBackground, showBackdrop } = useSelector(
     (state) => state.uiState
   );
+  const { editingTask } = useSelector((state) => state.boardsState);
 
   useEffect(() => {
     if (activeBackground.type === "color")
@@ -25,11 +27,12 @@ export default function App() {
         showSettingSidebar ? "ml-[320px]" : ""
       }`}
     >
-      <Alert/>
+      <Alert />
       <Backdrop isActive={showBackdrop} />
       <Toolbar />
       <Setting />
       <Lists />
+      {editingTask?.id && <TaskProperties />}
     </div>
   );
 }

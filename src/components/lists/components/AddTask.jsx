@@ -2,9 +2,10 @@ import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useOnClickOutside } from "hooks/useClickOutside";
 import { addNewTask, setUpdatingListInfo } from "features/slices/boardsSlice";
+import TextareaAutosize from "react-textarea-autosize";
 import { v4 as uuidv4 } from "uuid";
 
-import writeSoundEffect from "assets/audio/write-wound-effect.wav";
+import writeSoundEffect from "assets/audio/write-sound-effect.wav";
 import { RiCloseFill } from "react-icons/ri";
 
 const AddTask = () => {
@@ -17,7 +18,7 @@ const AddTask = () => {
   useOnClickOutside(addTaskRef, () => dispatch(setUpdatingListInfo(null)));
 
   const textAreaSubmit = (e) => {
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
       e.preventDefault();
       submitNewTask();
     }
@@ -40,7 +41,7 @@ const AddTask = () => {
 
   return (
     <div ref={addTaskRef}>
-      <textarea
+      <TextareaAutosize
         type="text"
         placeholder="عنوان کار جدید..."
         className="bg-white rounded shadow-sm h-16 w-full p-2 mb-1 text-xs border-2 focus:border-blue-700"
@@ -48,7 +49,7 @@ const AddTask = () => {
         value={newTaskTitle}
         onChange={(e) => setNewTaskTitle(e.target.value)}
         ref={addTaskTextboxRef}
-        onKeyUp={(e) => textAreaSubmit(e)}
+        onKeyDown={(e) => textAreaSubmit(e)}
       />
       {/* button container */}
       <section className="flex items-center">
