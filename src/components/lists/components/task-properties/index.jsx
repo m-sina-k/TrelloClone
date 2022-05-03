@@ -4,7 +4,7 @@ import { setShowBackdrop } from "features/slices/uiSlice";
 import { setEditingTask } from "features/slices/boardsSlice";
 import { useOnClickOutside } from "hooks/useClickOutside";
 import TaskTitle from "./TaskTitle";
-import TaskCurrentProps from "./TaskCurrentProps";
+import TaskCurrentProps from "./current-props";
 
 import { CgClose } from "react-icons/cg";
 import AvailableProps from "./available-props";
@@ -27,11 +27,9 @@ const TaskProperties = () => {
   const taskPropertiesRef = useRef();
   useOnClickOutside(taskPropertiesRef, () => {
     // prevent modal from closing if a property dropdown is active
-    if (!activeDropdown) {
-      dispatch(setShowBackdrop(false));
-      dispatch(setEditingTask(null));
-    }
+    if (!activeDropdown) closeTaskProperties();
   });
+
 
   return (
     <div
@@ -50,7 +48,7 @@ const TaskProperties = () => {
         <TaskTitle task={task} list={updatingListInfo} />
         <div className="grid grid-cols-[3.5fr_1.5fr] gap-x-3 mt-3">
           {/* existing properties */}
-          <TaskCurrentProps task={task} />
+          <TaskCurrentProps task={task} setActiveDropdown={setActiveDropdown} />
           {/* availbale properties */}
           <AvailableProps
             task={task}

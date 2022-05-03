@@ -3,24 +3,26 @@ import { useDispatch } from "react-redux";
 import { deleteTask } from "features/slices/boardsSlice";
 import { useOnClickOutside } from "hooks/useClickOutside";
 
-import deleteSoundEffect from 'assets/audio/delete-sound-effect.mp3'
+import deleteSoundEffect from "assets/audio/delete-sound-effect.mp3";
 
 import { CgClose } from "react-icons/cg";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-const DeleteTask = ({ task, setActiveDropdown,closeTaskProperties }) => {
+const DeleteTask = ({ task, setActiveDropdown, closeTaskProperties }) => {
   const dispatch = useDispatch();
   const deleteBtnRef = useRef();
   const [showConfirm, setShowConfirm] = useState(false);
   useOnClickOutside(deleteBtnRef, () => {
-    setShowConfirm(false);
-    setActiveDropdown(false);
+    if (showConfirm) {
+      setShowConfirm(false);
+      setActiveDropdown(false);
+    }
   });
 
   const fireDeleteTask = (id) => {
     setShowConfirm(false);
     dispatch(deleteTask(id));
-    closeTaskProperties()
+    closeTaskProperties();
     // play delete sound effect when delete task
     const audio = new Audio(deleteSoundEffect);
     audio.play();
@@ -32,7 +34,7 @@ const DeleteTask = ({ task, setActiveDropdown,closeTaskProperties }) => {
       ref={deleteBtnRef}
     >
       <section
-        className="flex w-full py-1.5 px-2 rounded-sm cursor-pointer transition-all duration-200 bg-red-200 text-red-800 hover:bg-red-300"
+        className="flex w-full py-1.5 px-2 rounded-sm cursor-pointer transition-all duration-200 bg-red-600 text-white hover:bg-red-700"
         onClick={() => {
           setShowConfirm(!showConfirm);
           setActiveDropdown(true);

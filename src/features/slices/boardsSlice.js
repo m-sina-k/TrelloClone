@@ -209,6 +209,24 @@ const boardsSlice = createSlice({
           currentBoard: state.currentBoard,
         })
       );
+    },
+    addTaskDesc:(state,{payload})=>{
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+      const editingTaskIndex = state.currentBoard.lists[editingListIndex].items.findIndex(item=>item.id === payload.id)
+      state.currentBoard.lists[editingListIndex].items[editingTaskIndex].desc = payload.desc
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
     }
   },
 });
@@ -226,6 +244,7 @@ export const {
   switchBoard,
   editTaskTitle,
   setEditingTask,
-  deleteTask
+  deleteTask,
+  addTaskDesc
 } = boardsSlice.actions;
 export default boardsSlice.reducer;
