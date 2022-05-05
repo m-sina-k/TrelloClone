@@ -43,7 +43,6 @@ const DeleteTask = ({ task, setActiveDropdown, closeTaskProperties }) => {
         <FaRegTrashAlt
           size={18}
           className="ml-2"
-          onClick={() => setShowConfirm(false)}
         />
         <span>حذف این کار</span>
       </section>

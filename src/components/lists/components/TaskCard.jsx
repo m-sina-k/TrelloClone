@@ -10,6 +10,7 @@ import {
 import { useOnClickOutside } from "hooks/useClickOutside";
 import TextareaAutosize from "react-textarea-autosize";
 
+import { BsCardText } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 
 const TaskCard = ({ item, list }) => {
@@ -85,27 +86,35 @@ const TaskCard = ({ item, list }) => {
   return (
     <motion.li
       key={item.id}
-      className="task-card bg-bgColor  relative flex items-center justify-between overflow-hidden rounded mb-1.5 shadow-sm text-sm"
+      className="task-card p-1.5 cursor-pointer bg-white  relative flex items-center justify-between overflow-hidden rounded mb-1.5 shadow-sm text-sm"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
+      onClick={openTaskProperties}
     >
       <div
         ref={editBoxRef}
         className={`w-full ${editingModeEnabled ? "relative z-50" : ""}`}
       >
+        {/* labels */}
+        {item.labels?.length > 0 && <ul className="flex flex-wrap items-center gap-1">
+          {item.labels.map((labelColor,index)=>(
+            <li key={index} style={{backgroundColor:labelColor}} className='w-10 h-2 rounded-full'></li>
+          ))}
+          </ul>}
         <TextareaAutosize
           minRows={editingModeEnabled ? 5 : 1}
           maxRows={50}
           ref={inputRef}
           value={taskTitle}
-          className={`rounded w-full h-full flex p-1.5 text-textColor cursor-pointer transition-all duration-150 overflow-y-auto focus:cursor-text`}
+          className={`rounded w-full h-full flex text-textColor my-1 cursor-pointer transition-all duration-150 overflow-y-auto focus:cursor-text`}
           onMouseDown={(e) => handleTaskTitleInputClick(e)}
           onChange={(e) => setTaskTitle(e.target.value)}
           onKeyDown={(e) => disableInputEnter(e)}
           onFocus={() => inputRef.current.select()}
-          onClick={openTaskProperties}
         />
+        {/* task properties icon's */}
+        <section className="flex gap-1">{item.desc && <BsCardText size={15}/>}</section>
         {/* save edited title button */}
         {editingModeEnabled && (
           <button

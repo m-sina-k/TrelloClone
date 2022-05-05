@@ -40,6 +40,7 @@ const initialState = {
       payload: null,
     },
   },
+  labelColors:['#61bd4f','#f2d600','#ff9f1a','#eb5a46','#c377e0','#0079bf'],
 };
 
 const uiSlice = createSlice({

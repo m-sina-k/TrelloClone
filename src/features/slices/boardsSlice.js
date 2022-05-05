@@ -192,15 +192,16 @@ const boardsSlice = createSlice({
     setEditingTask: (state, { payload }) => {
       state.editingTask = payload;
     },
-    deleteTask:(state,{payload})=>{
+    deleteTask: (state, { payload }) => {
       const tempBoards = state.boards.filter(
         (board) => board.id !== state.currentBoard.id
       );
       const editingListIndex = state.currentBoard.lists.findIndex(
         (list) => list.id === state.updatingListInfo.id
       );
-      const editingListItems = state.currentBoard.lists[editingListIndex].items
-      state.currentBoard.lists[editingListIndex].items = editingListItems.filter(item=>item.id !== payload);
+      const editingListItems = state.currentBoard.lists[editingListIndex].items;
+      state.currentBoard.lists[editingListIndex].items =
+        editingListItems.filter((item) => item.id !== payload);
       state.boards = [...tempBoards, state.currentBoard];
       localStorage.setItem(
         "boards",
@@ -210,15 +211,18 @@ const boardsSlice = createSlice({
         })
       );
     },
-    addTaskDesc:(state,{payload})=>{
+    addTaskDesc: (state, { payload }) => {
       const tempBoards = state.boards.filter(
         (board) => board.id !== state.currentBoard.id
       );
       const editingListIndex = state.currentBoard.lists.findIndex(
         (list) => list.id === state.updatingListInfo.id
       );
-      const editingTaskIndex = state.currentBoard.lists[editingListIndex].items.findIndex(item=>item.id === payload.id)
-      state.currentBoard.lists[editingListIndex].items[editingTaskIndex].desc = payload.desc
+      const editingTaskIndex = state.currentBoard.lists[
+        editingListIndex
+      ].items.findIndex((item) => item.id === payload.id);
+      state.currentBoard.lists[editingListIndex].items[editingTaskIndex].desc =
+        payload.desc;
       state.boards = [...tempBoards, state.currentBoard];
       localStorage.setItem(
         "boards",
@@ -227,7 +231,42 @@ const boardsSlice = createSlice({
           currentBoard: state.currentBoard,
         })
       );
-    }
+    },
+    addTaskLabel: (state, { payload }) => {
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+
+      const tempItems = state.currentBoard.lists[editingListIndex].items.filter(
+        (item) => item.id !== state.editingTask.id
+      );
+
+      let labelList = state.editingTask.labels || [];
+
+      if (labelList.indexOf(payload.label) > -1) {
+        labelList = labelList.filter((label) => label !== payload.label);
+        state.editingTask.labels = labelList;
+      } else {
+        state.editingTask.labels = [...labelList, payload.label];
+      }
+
+      state.currentBoard.lists[editingListIndex].items = [
+        ...tempItems,
+        state.editingTask,
+      ];
+
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
   },
 });
 
@@ -245,6 +284,7 @@ export const {
   editTaskTitle,
   setEditingTask,
   deleteTask,
-  addTaskDesc
+  addTaskDesc,
+  addTaskLabel,
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

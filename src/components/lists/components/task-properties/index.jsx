@@ -5,9 +5,9 @@ import { setEditingTask } from "features/slices/boardsSlice";
 import { useOnClickOutside } from "hooks/useClickOutside";
 import TaskTitle from "./TaskTitle";
 import TaskCurrentProps from "./current-props";
+import AvailableProps from "./available-props";
 
 import { CgClose } from "react-icons/cg";
-import AvailableProps from "./available-props";
 
 const TaskProperties = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const TaskProperties = () => {
 
   return (
     <div
-      className="fixed z-50 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[700px] max-w-[98%] h-[85vh] rounded-xl shadow p-7 overflow-y-auto bg-bgColor"
+      className="fixed z-50 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] min-w-[700px] max-w-[98%] h-[85vh] rounded-xl shadow p-7  bg-bgColor"
       ref={taskPropertiesRef}
     >
       {/* close button */}

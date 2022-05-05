@@ -64,6 +64,7 @@ body {
 }
 
 .setting-option--active {
+  position: relative;
   border: 3.5px solid royalblue;
 }
 

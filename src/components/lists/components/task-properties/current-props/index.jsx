@@ -1,9 +1,11 @@
+import Tags from "./Tags";
 import Desc from "./Desc";
 
-const TaskCurrentProps = ({ task,setActiveDropdown }) => {
+const TaskCurrentProps = ({ task, setActiveDropdown }) => {
   return (
     <div>
-      <Desc task={task} setActiveDropdown={setActiveDropdown}/>
+      {task.labels?.length > 0 && <Tags task={task}  setActiveDropdown={setActiveDropdown}/>}
+      <Desc task={task} setActiveDropdown={setActiveDropdown} />
     </div>
   );
 };
