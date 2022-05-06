@@ -11,7 +11,7 @@ import { useOnClickOutside } from "hooks/useClickOutside";
 import TextareaAutosize from "react-textarea-autosize";
 
 import { BsCardText } from "react-icons/bs";
-import { FiEdit } from "react-icons/fi";
+import { FiEdit, FiCheckSquare } from "react-icons/fi";
 
 const TaskCard = ({ item, list }) => {
   const dispatch = useDispatch();
@@ -24,7 +24,8 @@ const TaskCard = ({ item, list }) => {
     setTaskTitle(item.title);
   }, [item.title]);
 
-  const activateEditingMode = () => {
+  const activateEditingMode = (e) => {
+    e.stopPropagation();
     if (!editingModeEnabled) {
       inputRef.current.focus();
       setEditingModeEnabled(true);
@@ -83,38 +84,64 @@ const TaskCard = ({ item, list }) => {
   const editBoxRef = useRef();
   useOnClickOutside(editBoxRef, () => disableEditingMode(true));
 
+  const calculateTotalChecklistItems = () => {
+    if (item.checklists) {
+      let totalChecklistItems = [];
+      for (let i = 0; i < item.checklists.length; i++) {
+        totalChecklistItems = totalChecklistItems.concat(
+          item.checklists[i].items
+        );
+      }
+      const compeletedItemsCount = totalChecklistItems.filter(
+        (item) => item.isCompeleted
+      ).length;
+      if (totalChecklistItems.length > 0)
+        return (
+          <section className="flex items-center">
+            <FiCheckSquare size={15} />
+            <span className="mr-1 text-xs text-textColor">
+              {totalChecklistItems.length} / {compeletedItemsCount}
+            </span>
+          </section>
+        );
+    }
+  };
+
   return (
     <motion.li
       key={item.id}
-      className="task-card p-1.5 cursor-pointer bg-white  relative flex items-center justify-between overflow-hidden rounded mb-1.5 shadow-sm text-sm"
+      className="task-card px-1.5 cursor-pointer bg-white  relative overflow-hidden rounded mb-1.5 shadow-sm text-sm"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
       onClick={openTaskProperties}
     >
+      {/* labels */}
+      <ul className="flex flex-wrap items-center gap-1 pt-1">
+        {item.labels?.length > 0 &&
+          item.labels.map((labelColor, index) => (
+            <li
+              key={index}
+              style={{ backgroundColor: labelColor }}
+              className="w-10 h-2 rounded-full"
+            ></li>
+          ))}
+      </ul>
       <div
         ref={editBoxRef}
         className={`w-full ${editingModeEnabled ? "relative z-50" : ""}`}
       >
-        {/* labels */}
-        {item.labels?.length > 0 && <ul className="flex flex-wrap items-center gap-1">
-          {item.labels.map((labelColor,index)=>(
-            <li key={index} style={{backgroundColor:labelColor}} className='w-10 h-2 rounded-full'></li>
-          ))}
-          </ul>}
         <TextareaAutosize
           minRows={editingModeEnabled ? 5 : 1}
           maxRows={50}
           ref={inputRef}
           value={taskTitle}
-          className={`rounded w-full h-full flex text-textColor my-1 cursor-pointer transition-all duration-150 overflow-y-auto focus:cursor-text`}
+          className="rounded w-full h-full flex text-textColor my-1 cursor-pointer transition-all duration-150 overflow-y-auto focus:cursor-text"
           onMouseDown={(e) => handleTaskTitleInputClick(e)}
           onChange={(e) => setTaskTitle(e.target.value)}
           onKeyDown={(e) => disableInputEnter(e)}
           onFocus={() => inputRef.current.select()}
         />
-        {/* task properties icon's */}
-        <section className="flex gap-1">{item.desc && <BsCardText size={15}/>}</section>
         {/* save edited title button */}
         {editingModeEnabled && (
           <button
@@ -125,11 +152,18 @@ const TaskCard = ({ item, list }) => {
           </button>
         )}
       </div>
+      {/* task properties icon's */}
+      <section className="flex gap-1 pb-1">
+        {item.desc && <BsCardText size={15} />}
+        {item.checklists?.length > 0 && (
+          calculateTotalChecklistItems()
+        )}
+      </section>
 
       {/* task edit button */}
       <button
         className="task-card__edit-button hidden absolute z-10 top-1 left-1 p-1.5 transition-all duration-100 rounded bg-light hover:bg-lightShade"
-        onClick={activateEditingMode}
+        onClick={(e) => activateEditingMode(e)}
       >
         <FiEdit size={12} />
       </button>

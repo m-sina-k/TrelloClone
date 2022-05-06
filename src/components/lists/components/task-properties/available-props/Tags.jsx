@@ -27,11 +27,7 @@ const Tags = ({ task, setActiveDropdown }) => {
           setActiveDropdown(true);
         }}
       >
-        <HiOutlineTag
-          size={18}
-          className="ml-2"
-          onClick={() => setShowLabelDd(false)}
-        />
+        <HiOutlineTag size={18} className="ml-2" />
         <span>برچسب ها</span>
       </section>
       {showLabelDd && (

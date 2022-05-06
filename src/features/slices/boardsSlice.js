@@ -267,6 +267,209 @@ const boardsSlice = createSlice({
         })
       );
     },
+    addTaskChecklist: (state, { payload }) => {
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+
+      const tempItems = state.currentBoard.lists[editingListIndex].items.filter(
+        (item) => item.id !== state.editingTask.id
+      );
+
+      let checklistArr = state.editingTask.checklists || [];
+      state.editingTask.checklists = [...checklistArr, payload.checklist];
+
+      state.currentBoard.lists[editingListIndex].items = [
+        ...tempItems,
+        state.editingTask,
+      ];
+
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
+    deleteTaskChecklist: (state, { payload }) => {
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+
+      const tempItems = state.currentBoard.lists[editingListIndex].items.filter(
+        (item) => item.id !== state.editingTask.id
+      );
+
+      state.editingTask.checklists = state.editingTask.checklists.filter(
+        (checklist) => checklist.id !== payload
+      );
+
+      state.currentBoard.lists[editingListIndex].items = [
+        ...tempItems,
+        state.editingTask,
+      ];
+
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
+    addChecklistItem: (state, { payload }) => {
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+
+      const tempItems = state.currentBoard.lists[editingListIndex].items.filter(
+        (item) => item.id !== state.editingTask.id
+      );
+      const editingChecklist = state.editingTask.checklists.findIndex(
+        (checklist) => checklist.id === payload.id
+      );
+      let checklistArr =
+        state.editingTask.checklists[editingChecklist].items || [];
+
+      state.editingTask.checklists[editingChecklist].items = [
+        ...checklistArr,
+        payload.item,
+      ];
+
+      state.currentBoard.lists[editingListIndex].items = [
+        ...tempItems,
+        state.editingTask,
+      ];
+
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
+    toggleChecklistItemCompelete: (state, { payload }) => {
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+
+      const tempItems = state.currentBoard.lists[editingListIndex].items.filter(
+        (item) => item.id !== state.editingTask.id
+      );
+      const editingChecklist = state.editingTask.checklists.findIndex(
+        (checklist) => checklist.id === payload.listId
+      );
+      const editingChecklistItem = state.editingTask.checklists[
+        editingChecklist
+      ].items.findIndex((item) => item.id === payload.itemId);
+
+      state.editingTask.checklists[editingChecklist].items[
+        editingChecklistItem
+      ].isCompeleted =
+        !state.editingTask.checklists[editingChecklist].items[
+          editingChecklistItem
+        ].isCompeleted;
+
+      state.currentBoard.lists[editingListIndex].items = [
+        ...tempItems,
+        state.editingTask,
+      ];
+
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
+    deleteChecklistItem:(state,{payload})=>{
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+
+      const tempItems = state.currentBoard.lists[editingListIndex].items.filter(
+        (item) => item.id !== state.editingTask.id
+      );
+      const editingChecklist = state.editingTask.checklists.findIndex(
+        (checklist) => checklist.id === payload.listId
+      );
+      let checklistArr =
+        state.editingTask.checklists[editingChecklist].items;
+
+      state.editingTask.checklists[editingChecklist].items = checklistArr.filter(item=>item.id !== payload.itemId)
+
+      state.currentBoard.lists[editingListIndex].items = [
+        ...tempItems,
+        state.editingTask,
+      ];
+
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
+    editChecklistItem:(state,{payload})=>{
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+
+      const tempItems = state.currentBoard.lists[editingListIndex].items.filter(
+        (item) => item.id !== state.editingTask.id
+      );
+      const editingChecklist = state.editingTask.checklists.findIndex(
+        (checklist) => checklist.id === payload.listId
+      );
+      const editingChecklistItem = state.editingTask.checklists[
+        editingChecklist
+      ].items.findIndex((item) => item.id === payload.itemId);
+
+      state.editingTask.checklists[editingChecklist].items[
+        editingChecklistItem
+      ].title=payload.title
+
+      state.currentBoard.lists[editingListIndex].items = [
+        ...tempItems,
+        state.editingTask,
+      ];
+
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    }
   },
 });
 
@@ -286,5 +489,11 @@ export const {
   deleteTask,
   addTaskDesc,
   addTaskLabel,
+  addTaskChecklist,
+  deleteTaskChecklist,
+  addChecklistItem,
+  toggleChecklistItemCompelete,
+  deleteChecklistItem,
+  editChecklistItem
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

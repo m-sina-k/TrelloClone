@@ -1,6 +1,4 @@
 import { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
-import { deleteTask } from "features/slices/boardsSlice";
 import { useOnClickOutside } from "hooks/useClickOutside";
 
 import deleteSoundEffect from "assets/audio/delete-sound-effect.mp3";
@@ -8,8 +6,15 @@ import deleteSoundEffect from "assets/audio/delete-sound-effect.mp3";
 import { CgClose } from "react-icons/cg";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-const DeleteTask = ({ task, setActiveDropdown, closeTaskProperties }) => {
-  const dispatch = useDispatch();
+const DeleteTask = ({
+  task,
+  setActiveDropdown,
+  btnText,
+  headingText,
+  callback,
+  btnStyle,
+  deleteIcon
+}) => {
   const deleteBtnRef = useRef();
   const [showConfirm, setShowConfirm] = useState(false);
   useOnClickOutside(deleteBtnRef, () => {
@@ -19,10 +24,10 @@ const DeleteTask = ({ task, setActiveDropdown, closeTaskProperties }) => {
     }
   });
 
-  const fireDeleteTask = (id) => {
+  const fireCallback = () => {
     setShowConfirm(false);
-    dispatch(deleteTask(id));
-    closeTaskProperties();
+    setActiveDropdown(false);
+    callback();
     // play delete sound effect when delete task
     const audio = new Audio(deleteSoundEffect);
     audio.play();
@@ -34,22 +39,19 @@ const DeleteTask = ({ task, setActiveDropdown, closeTaskProperties }) => {
       ref={deleteBtnRef}
     >
       <section
-        className="flex w-full py-1.5 px-2 rounded-sm cursor-pointer transition-all duration-200 bg-red-600 text-white hover:bg-red-700"
+        className={btnStyle}
         onClick={() => {
           setShowConfirm(!showConfirm);
           setActiveDropdown(true);
         }}
       >
-        <FaRegTrashAlt
-          size={18}
-          className="ml-2"
-        />
-        <span>حذف این کار</span>
+        {deleteIcon && <FaRegTrashAlt size={18} className="ml-2" />}
+        <button>{btnText}</button>
       </section>
       {showConfirm && (
         <div className="absolute z-10 top-[120%] left-0 min-w-[250px] p-2 rounded shadow-md bg-white">
           <section className="flex items-center justify-between pb-1.5 border-b-2 border-light">
-            <h6 className="text-sm text-black">کار حذف شود؟</h6>
+            <h6 className="text-sm text-black">{headingText}</h6>
             <CgClose
               size={15}
               className="cursor-pointer"
@@ -65,7 +67,7 @@ const DeleteTask = ({ task, setActiveDropdown, closeTaskProperties }) => {
             </p>
             <button
               className="rounded shoadow text-white bg-red-600 w-full text-xs mt-2 py-1.5 hover:bg-red-700"
-              onClick={() => fireDeleteTask(task.id)}
+              onClick={fireCallback}
             >
               حذف
             </button>

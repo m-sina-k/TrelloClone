@@ -33,7 +33,7 @@ const TaskProperties = () => {
 
   return (
     <div
-      className="fixed z-50 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] min-w-[700px] max-w-[98%] h-[85vh] rounded-xl shadow p-7  bg-bgColor"
+      className="vertical-scrollbar fixed z-50 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] min-w-[700px] max-w-[98%] min-h-[85vh] rounded-xl shadow p-7 bg-bgColor"
       ref={taskPropertiesRef}
     >
       {/* close button */}
@@ -48,7 +48,9 @@ const TaskProperties = () => {
         <TaskTitle task={task} list={updatingListInfo} />
         <div className="grid grid-cols-[3.5fr_1.5fr] gap-x-3 mt-3">
           {/* existing properties */}
+          <div className="max-h-[500px] overflow-y-auto">
           <TaskCurrentProps task={task} setActiveDropdown={setActiveDropdown} />
+          </div>
           {/* availbale properties */}
           <AvailableProps
             task={task}
