@@ -24,7 +24,7 @@ textarea:focus {
 }
 
 body {
-  min-height: 100vh;
+  overflow: auto;
   background-size: cover !important;
   direction: rtl;
   font-family: "Vazir-Bold";
@@ -44,9 +44,9 @@ body {
   }
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 0.3em;
-  background-color:#afafaf;
+  background-color: #afafaf;
   transition: all 0.3s ease;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
@@ -77,7 +77,7 @@ body {
   -o-transition: all 0.3s ease;
 }
 
-.horizontal-scrollbar::-webkit-scrollbar-thumb{
+.horizontal-scrollbar::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 2px;
   -webkit-border-radius: 2px;

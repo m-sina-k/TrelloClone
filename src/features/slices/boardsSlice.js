@@ -401,7 +401,7 @@ const boardsSlice = createSlice({
         })
       );
     },
-    deleteChecklistItem:(state,{payload})=>{
+    deleteChecklistItem: (state, { payload }) => {
       const tempBoards = state.boards.filter(
         (board) => board.id !== state.currentBoard.id
       );
@@ -415,10 +415,10 @@ const boardsSlice = createSlice({
       const editingChecklist = state.editingTask.checklists.findIndex(
         (checklist) => checklist.id === payload.listId
       );
-      let checklistArr =
-        state.editingTask.checklists[editingChecklist].items;
+      let checklistArr = state.editingTask.checklists[editingChecklist].items;
 
-      state.editingTask.checklists[editingChecklist].items = checklistArr.filter(item=>item.id !== payload.itemId)
+      state.editingTask.checklists[editingChecklist].items =
+        checklistArr.filter((item) => item.id !== payload.itemId);
 
       state.currentBoard.lists[editingListIndex].items = [
         ...tempItems,
@@ -434,7 +434,7 @@ const boardsSlice = createSlice({
         })
       );
     },
-    editChecklistItem:(state,{payload})=>{
+    editChecklistItem: (state, { payload }) => {
       const tempBoards = state.boards.filter(
         (board) => board.id !== state.currentBoard.id
       );
@@ -454,7 +454,7 @@ const boardsSlice = createSlice({
 
       state.editingTask.checklists[editingChecklist].items[
         editingChecklistItem
-      ].title=payload.title
+      ].title = payload.title;
 
       state.currentBoard.lists[editingListIndex].items = [
         ...tempItems,
@@ -469,7 +469,95 @@ const boardsSlice = createSlice({
           currentBoard: state.currentBoard,
         })
       );
-    }
+    },
+    uploadTaskAttachment: (state, { payload }) => {
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+      const tempItems = state.currentBoard.lists[editingListIndex].items.filter(
+        (item) => item.id !== state.editingTask.id
+      );
+      let attachmentArr = state.editingTask.attachList || [];
+
+      state.editingTask.attachList = [...attachmentArr, payload];
+      state.currentBoard.lists[editingListIndex].items = [
+        ...tempItems,
+        state.editingTask,
+      ];
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
+    removeTaskAttachment: (state, { payload }) => {
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+
+      const tempItems = state.currentBoard.lists[editingListIndex].items.filter(
+        (item) => item.id !== state.editingTask.id
+      );
+
+      let attachmentArr = state.editingTask.attachList;
+
+      state.editingTask.attachList = attachmentArr.filter(
+        (item) => item.id !== payload
+      );
+
+      state.currentBoard.lists[editingListIndex].items = [
+        ...tempItems,
+        state.editingTask,
+      ];
+
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
+    renameAttachment: (state, { payload }) => {
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+
+      const tempItems = state.currentBoard.lists[editingListIndex].items.filter(
+        (item) => item.id !== state.editingTask.id
+      );
+
+      let editedAttachIndex = state.editingTask.attachList.findIndex(attch=>attch.id=== payload.id);
+
+      state.editingTask.attachList[editedAttachIndex].name = payload.name
+
+      state.currentBoard.lists[editingListIndex].items = [
+        ...tempItems,
+        state.editingTask,
+      ];
+
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
   },
 });
 
@@ -494,6 +582,9 @@ export const {
   addChecklistItem,
   toggleChecklistItemCompelete,
   deleteChecklistItem,
-  editChecklistItem
+  editChecklistItem,
+  uploadTaskAttachment,
+  removeTaskAttachment,
+  renameAttachment,
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

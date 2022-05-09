@@ -7,7 +7,7 @@ import { CgClose } from "react-icons/cg";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 const DeleteTask = ({
-  task,
+  btnUnderline,
   setActiveDropdown,
   btnText,
   headingText,
@@ -24,7 +24,8 @@ const DeleteTask = ({
     }
   });
 
-  const fireCallback = () => {
+  const fireCallback = (e) => {
+    e.preventDefault();
     setShowConfirm(false);
     setActiveDropdown(false);
     callback();
@@ -35,7 +36,7 @@ const DeleteTask = ({
 
   return (
     <li
-      className="relative flex items-center rounded-sm mb-2 text-sm"
+      className="relative flex items-center rounded-sm text-sm"
       ref={deleteBtnRef}
     >
       <section
@@ -46,7 +47,7 @@ const DeleteTask = ({
         }}
       >
         {deleteIcon && <FaRegTrashAlt size={18} className="ml-2" />}
-        <button>{btnText}</button>
+        <button className={`${btnUnderline ? 'underline' : ''}`}  onClick={(e) => e.preventDefault()}>{btnText}</button>
       </section>
       {showConfirm && (
         <div className="absolute z-10 top-[120%] left-0 min-w-[250px] p-2 rounded shadow-md bg-white">
@@ -67,7 +68,7 @@ const DeleteTask = ({
             </p>
             <button
               className="rounded shoadow text-white bg-red-600 w-full text-xs mt-2 py-1.5 hover:bg-red-700"
-              onClick={fireCallback}
+              onClick={e=>fireCallback(e)}
             >
               حذف
             </button>

@@ -7,9 +7,10 @@ import Lists from "components/lists/Lists";
 import Backdrop from "components/Backdrop";
 import Alert from "components/Alert";
 import TaskProperties from "components/lists/components/task-properties";
+import FilePreviewer from "components/file-previewer/FilePreviewer";
 
 export default function App() {
-  const { showSettingSidebar, activeBackground, showBackdrop } = useSelector(
+  const { showSettingSidebar, activeBackground, showBackdrop,previewerFile } = useSelector(
     (state) => state.uiState
   );
   const { editingTask } = useSelector((state) => state.boardsState);
@@ -33,6 +34,7 @@ export default function App() {
       <Setting />
       <Lists />
       {editingTask?.id && <TaskProperties />}
+      {previewerFile?.file && <FilePreviewer attach={previewerFile}/>}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useOnClickOutside } from "hooks/useClickOutside";
-import LabelsDd from "./LabelsDd";
+import LabelsDd from "./components/LabelsDd";
 
 import { HiOutlineTag } from "react-icons/hi";
 

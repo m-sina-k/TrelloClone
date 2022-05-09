@@ -28,8 +28,6 @@ const initialState = {
     value: "#82ccdd",
   },
   showSettingSidebar: false,
-  showBackdrop: false,
-  lockBodyScroll: false,
   // getting tooblar heigth to calculate lists container heigth (100vh - toolbarHeight)
   toolbarHeight: null,
   alertConfig: {
@@ -41,6 +39,7 @@ const initialState = {
     },
   },
   labelColors:['#61bd4f','#f2d600','#ff9f1a','#eb5a46','#c377e0','#0079bf'],
+  previewerFile:null,
 };
 
 const uiSlice = createSlice({
@@ -56,7 +55,6 @@ const uiSlice = createSlice({
     },
     setShowBackdrop: (state, { payload }) => {
       state.showBackdrop = payload;
-      state.lockBodyScroll = payload;
     },
     setToolbarHeight: (state, { payload }) => {
       state.toolbarHeight = payload;
@@ -64,6 +62,9 @@ const uiSlice = createSlice({
     setAlertConfig: (state, { payload }) => {
       state.alertConfig = payload;
     },
+    setPreviewerFile:(state,{payload})=>{
+      state.previewerFile = payload;
+    }
   },
 });
 
@@ -73,5 +74,6 @@ export const {
   setShowBackdrop,
   setToolbarHeight,
   setAlertConfig,
+  setPreviewerFile
 } = uiSlice.actions;
 export default uiSlice.reducer;

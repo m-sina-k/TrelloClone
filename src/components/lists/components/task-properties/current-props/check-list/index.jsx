@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { deleteTaskChecklist } from "features/slices/boardsSlice";
 
-import DeleteChecklist from "../../available-props/DeleteProp";
+import DeleteChecklist from "../../available-props/components/DeleteProp";
 import ChecklistItems from "./ChecklistItems";
 import Addbox from "./Addbox";
 
@@ -24,7 +24,6 @@ const Checklists = ({ task, setActiveDropdown }) => {
             <DeleteChecklist
               btnText="حذف"
               headingText={`${checklist.name} حذف شود؟`}
-              task={task}
               setActiveDropdown={setActiveDropdown}
               callback={fireDeleteChecklist}
               btnStyle="py-1 px-4 text-xs bg-light rounded cursor-pointer text-textColor mr-2 hover:bg-lightShade hover:text-black"

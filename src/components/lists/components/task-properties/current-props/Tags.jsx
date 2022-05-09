@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useOnClickOutside } from "hooks/useClickOutside";
-import LabelsDd from "../available-props/LabelsDd";
+import LabelsDd from "../available-props/components/LabelsDd";
 
 import { HiPlus } from "react-icons/hi";
 
@@ -24,6 +24,9 @@ const Tags = ({ task, setActiveDropdown }) => {
     if (showLabelsDd) {
       setShowLabelsDd(null);
       setActiveDropdown(false);
+      if (task.labels?.indexOf(showLabelsDd) === -1){
+        console.log('goch ya!');
+      }
     }
   });
   useOnClickOutside(addLabelBtnRef, () => {
@@ -32,6 +35,10 @@ const Tags = ({ task, setActiveDropdown }) => {
       setActiveDropdown(false);
     }
   });
+  const closeDd = ()=>{
+    setShowLabelsDd(null)
+    setActiveDropdown(false)
+  }
   return (
     <div className="mt-2 mb-5 flex">
       <div className="mr-8">
@@ -53,7 +60,7 @@ const Tags = ({ task, setActiveDropdown }) => {
                 <LabelsDd
                 showLabelsDd={showLabelsDd}
                   task={task}
-                  closeDd={() => setShowLabelsDd(null)}
+                  closeDd={closeDd}
                   setActiveDropdown={setActiveDropdown}
                 />
               )}
@@ -73,8 +80,9 @@ const Tags = ({ task, setActiveDropdown }) => {
 
             {showLabelsDd === "add-button" && (
               <LabelsDd
-                task={task}
-                closeDd={() => setShowLabelsDd(null)}
+               task={task}
+               showLabelsDd={showLabelsDd}
+                closeDd={closeDd}
                 setActiveDropdown={setActiveDropdown}
               />
             )}

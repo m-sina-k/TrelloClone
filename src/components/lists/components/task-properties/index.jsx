@@ -14,6 +14,7 @@ const TaskProperties = () => {
   const { editingTask: task, updatingListInfo } = useSelector(
     (state) => state.boardsState
   );
+  const { previewerFile } = useSelector((state) => state.uiState);
 
   // state for active property dropdown,if true prevent modal close on click outside
   const [activeDropdown, setActiveDropdown] = useState(false);
@@ -27,36 +28,37 @@ const TaskProperties = () => {
   const taskPropertiesRef = useRef();
   useOnClickOutside(taskPropertiesRef, () => {
     // prevent modal from closing if a property dropdown is active
-    if (!activeDropdown) closeTaskProperties();
+    if (!activeDropdown && !previewerFile) closeTaskProperties();
   });
 
-
   return (
-    <div
-      className="vertical-scrollbar fixed z-50 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] min-w-[700px] max-w-[98%] min-h-[85vh] rounded-xl shadow p-7 bg-bgColor"
-      ref={taskPropertiesRef}
-    >
-      {/* close button */}
-      <CgClose
-        className="absolute top-2 left-2 cursor-pointer p-1 text-textColor w-7 h-7 rounded-full hover:text-black hover:bg-light"
-        size={18}
-        onClick={closeTaskProperties}
-      />
-
-      {/* properties container */}
-      <div className="mt-5">
-        <TaskTitle task={task} list={updatingListInfo} />
-        <div className="grid grid-cols-[3.5fr_1.5fr] gap-x-3 mt-3">
-          {/* existing properties */}
-          <div className="max-h-[500px] overflow-y-auto">
-          <TaskCurrentProps task={task} setActiveDropdown={setActiveDropdown} />
+    <div className="overflow-auto fixed top-0 left-0 right-0 bottom-0 z-50">
+      <div
+        className="absolute z-50 top-[50px] left-[50%] translate-x-[-50%]  rounded-xl shadow p-7 bg-bgColor"
+        ref={taskPropertiesRef}
+      >
+        {/* close button */}
+        <CgClose
+          className="absolute top-2 left-2 cursor-pointer p-1 text-textColor w-7 h-7 rounded-full hover:text-black hover:bg-light"
+          size={18}
+          onClick={closeTaskProperties}
+        />
+        {/* properties container */}
+        <div className="mt-5">
+          <TaskTitle task={task} list={updatingListInfo} />
+          <div className="grid grid-cols-[3.5fr_1.5fr] gap-x-3 mt-3">
+            {/* existing properties */}
+            <TaskCurrentProps
+              task={task}
+              setActiveDropdown={setActiveDropdown}
+            />
+            {/* availbale properties */}
+            <AvailableProps
+              task={task}
+              setActiveDropdown={setActiveDropdown}
+              closeTaskProperties={closeTaskProperties}
+            />
           </div>
-          {/* availbale properties */}
-          <AvailableProps
-            task={task}
-            setActiveDropdown={setActiveDropdown}
-            closeTaskProperties={closeTaskProperties}
-          />
         </div>
       </div>
     </div>

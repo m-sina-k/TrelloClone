@@ -3,12 +3,12 @@ import { addTaskLabel } from "features/slices/boardsSlice";
 
 import { CgClose } from "react-icons/cg";
 
-const LabelsDd = ({ task,closeDd,setActiveDropdown,showLabelsDd }) => {
+const LabelsDd = ({ task, closeDd, setActiveDropdown, showLabelsDd }) => {
   const dispatch = useDispatch();
   const { labelColors } = useSelector((state) => state.uiState);
+
   const fireAddTaskLabel = (color) => {
-    // if existing label removed , close task properties on click outside
-    if(task.labels?.indexOf(showLabelsDd) !== -1 && !showLabelsDd) setActiveDropdown(false)
+    if(task.labels?.indexOf(showLabelsDd) > -1) setActiveDropdown(false);
     dispatch(addTaskLabel({ id: task.id, label: color }));
   };
   return (

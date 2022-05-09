@@ -3,10 +3,10 @@ import { deleteTask } from "features/slices/boardsSlice";
 
 import Checklist from "./Checklist";
 import Tags from "./Tags";
-import DeleteTask from "./DeleteProp";
+import Attachment from "./Attachment";
+import DeleteTask from "./components/DeleteProp";
 
 // import { AiOutlineClockCircle } from "react-icons/ai";
-// import { MdOutlineAttachment } from "react-icons/md";
 
 const AvailableProps = ({ task, setActiveDropdown, closeTaskProperties }) => {
   const dispatch = useDispatch()
@@ -22,6 +22,7 @@ const AvailableProps = ({ task, setActiveDropdown, closeTaskProperties }) => {
       <ul className="mt-2.5">
         <Tags task={task} setActiveDropdown={setActiveDropdown} />
         <Checklist task={task} setActiveDropdown={setActiveDropdown} />
+        <Attachment task={task} setActiveDropdown={setActiveDropdown}/>
         <DeleteTask
           btnText="حذف این کار"
           headingText='کار حذف شود؟'

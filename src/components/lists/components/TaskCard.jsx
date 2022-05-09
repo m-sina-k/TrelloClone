@@ -10,6 +10,7 @@ import {
 import { useOnClickOutside } from "hooks/useClickOutside";
 import TextareaAutosize from "react-textarea-autosize";
 
+import { MdOutlineAttachment } from "react-icons/md";
 import { BsCardText } from "react-icons/bs";
 import { FiEdit, FiCheckSquare } from "react-icons/fi";
 
@@ -110,7 +111,7 @@ const TaskCard = ({ item, list }) => {
   return (
     <motion.li
       key={item.id}
-      className="task-card px-1.5 cursor-pointer bg-white  relative overflow-hidden rounded mb-1.5 shadow-sm text-sm"
+      className="task-card px-1.5 cursor-pointer bg-white  relative rounded mb-1.5 shadow-sm text-sm"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
@@ -132,11 +133,11 @@ const TaskCard = ({ item, list }) => {
         className={`w-full ${editingModeEnabled ? "relative z-50" : ""}`}
       >
         <TextareaAutosize
-          minRows={editingModeEnabled ? 5 : 1}
+          minRows={editingModeEnabled ? 5 : 1.2}
           maxRows={50}
           ref={inputRef}
           value={taskTitle}
-          className="rounded w-full h-full flex text-textColor my-1 cursor-pointer transition-all duration-150 overflow-y-auto focus:cursor-text"
+          className="rounded w-full h-full flex text-textColor pt-2 cursor-pointer transition-all duration-150 overflow-y-auto focus:cursor-text"
           onMouseDown={(e) => handleTaskTitleInputClick(e)}
           onChange={(e) => setTaskTitle(e.target.value)}
           onKeyDown={(e) => disableInputEnter(e)}
@@ -155,6 +156,7 @@ const TaskCard = ({ item, list }) => {
       {/* task properties icon's */}
       <section className="flex gap-1 pb-1">
         {item.desc && <BsCardText size={15} />}
+        {item.attachList?.length && <MdOutlineAttachment size={17}/>}
         {item.checklists?.length > 0 && (
           calculateTotalChecklistItems()
         )}
