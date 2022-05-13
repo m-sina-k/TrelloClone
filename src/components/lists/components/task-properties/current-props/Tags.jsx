@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useOnClickOutside } from "hooks/useClickOutside";
+import { motion } from "framer-motion";
 import LabelsDd from "../available-props/components/LabelsDd";
 
 import { HiPlus } from "react-icons/hi";
@@ -24,8 +25,8 @@ const Tags = ({ task, setActiveDropdown }) => {
     if (showLabelsDd) {
       setShowLabelsDd(null);
       setActiveDropdown(false);
-      if (task.labels?.indexOf(showLabelsDd) === -1){
-        console.log('goch ya!');
+      if (task.labels?.indexOf(showLabelsDd) === -1) {
+        console.log("goch ya!");
       }
     }
   });
@@ -35,12 +36,17 @@ const Tags = ({ task, setActiveDropdown }) => {
       setActiveDropdown(false);
     }
   });
-  const closeDd = ()=>{
-    setShowLabelsDd(null)
-    setActiveDropdown(false)
-  }
+  const closeDd = () => {
+    setShowLabelsDd(null);
+    setActiveDropdown(false);
+  };
   return (
-    <div className="mt-2 mb-5 flex">
+    <motion.div
+      className="mt-2 mb-5 flex"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay:0.1,duration: 0.4 }}
+    >
       <div className="mr-8">
         <h6 className="text-xs text-textColor mb-2">برچسب ها</h6>
         <ul className="flex items-center gap-1.5">
@@ -58,7 +64,7 @@ const Tags = ({ task, setActiveDropdown }) => {
               ></button>
               {showLabelsDd === labelColor && (
                 <LabelsDd
-                showLabelsDd={showLabelsDd}
+                  showLabelsDd={showLabelsDd}
                   task={task}
                   closeDd={closeDd}
                   setActiveDropdown={setActiveDropdown}
@@ -80,8 +86,8 @@ const Tags = ({ task, setActiveDropdown }) => {
 
             {showLabelsDd === "add-button" && (
               <LabelsDd
-               task={task}
-               showLabelsDd={showLabelsDd}
+                task={task}
+                showLabelsDd={showLabelsDd}
                 closeDd={closeDd}
                 setActiveDropdown={setActiveDropdown}
               />
@@ -89,7 +95,7 @@ const Tags = ({ task, setActiveDropdown }) => {
           </li>
         </ul>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

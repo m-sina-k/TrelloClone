@@ -38,8 +38,18 @@ const initialState = {
       payload: null,
     },
   },
-  labelColors:['#61bd4f','#f2d600','#ff9f1a','#eb5a46','#c377e0','#0079bf'],
-  previewerFile:null,
+  labelColors: [
+    "#61bd4f",
+    "#f2d600",
+    "#ff9f1a",
+    "#eb5a46",
+    "#c377e0",
+    "#0079bf",
+  ],
+  previewerFile: null,
+  playAudio: localStorage.getItem("audioConfig")
+    ? JSON.parse(localStorage.getItem("audioConfig"))
+    : true,
 };
 
 const uiSlice = createSlice({
@@ -62,9 +72,13 @@ const uiSlice = createSlice({
     setAlertConfig: (state, { payload }) => {
       state.alertConfig = payload;
     },
-    setPreviewerFile:(state,{payload})=>{
+    setPreviewerFile: (state, { payload }) => {
       state.previewerFile = payload;
-    }
+    },
+    togglePlayAudio: (state) => {
+      state.playAudio = !state.playAudio;
+      localStorage.setItem("audioConfig", JSON.stringify(state.playAudio));
+    },
   },
 });
 
@@ -74,6 +88,7 @@ export const {
   setShowBackdrop,
   setToolbarHeight,
   setAlertConfig,
-  setPreviewerFile
+  setPreviewerFile,
+  togglePlayAudio,
 } = uiSlice.actions;
 export default uiSlice.reducer;

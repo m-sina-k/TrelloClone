@@ -1,15 +1,16 @@
 import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { useOnClickOutside } from "hooks/useClickOutside";
 import { addNewTask, setUpdatingListInfo } from "features/slices/boardsSlice";
 import TextareaAutosize from "react-textarea-autosize";
 import { v4 as uuidv4 } from "uuid";
 
-import writeSoundEffect from "assets/audio/write-sound-effect.wav";
+import popSoundEffect from "assets/audio/write-sound-effect.mp3";
 import { RiCloseFill } from "react-icons/ri";
 
 const AddTask = () => {
   const dispatch = useDispatch();
+  const {playAudio} = useSelector(state=>state.uiState)
   const addTaskTextboxRef = useRef();
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
@@ -34,8 +35,10 @@ const AddTask = () => {
       setNewTaskTitle("");
       addTaskTextboxRef.current.focus();
       // play writing sound effect when add new task
-      const audio = new Audio(writeSoundEffect);
-      audio.play();
+      if(playAudio){
+        const audio = new Audio(popSoundEffect);
+        audio.play();
+      }
     }
   };
 

@@ -5,6 +5,7 @@ import { useOnClickOutside } from "hooks/useClickOutside";
 import { setShowSettingSidebar } from "features/slices/uiSlice";
 import SettingItem, { SubcategoryHeading } from "./components/SettingItem";
 import AppearanceTab from "./AppearanceTab";
+import AudioTab from "./AudioTab";
 
 import { MdColorLens } from "react-icons/md";
 import { HiVolumeUp, HiOutlineCog } from "react-icons/hi";
@@ -121,6 +122,22 @@ const Setting = () => {
         >
           {(state) => (
             <AppearanceTab
+              style={{
+                ...defaultStyle,
+                ...slideIn[state],
+              }}
+            />
+          )}
+        </Transition>
+        {/* audio tab */}
+        <Transition
+          in={activeSettingTab === "audio"}
+          mountOnEnter
+          unmountOnExit
+          timeout={0}
+        >
+          {(state) => (
+            <AudioTab
               style={{
                 ...defaultStyle,
                 ...slideIn[state],

@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
 import TextareaAutosize from "react-textarea-autosize";
 import { useOnClickOutside } from "hooks/useClickOutside";
 import { addTaskDesc } from "features/slices/boardsSlice";
@@ -40,7 +41,12 @@ const Desc = ({ task, setActiveDropdown }) => {
   useOnClickOutside(descBoxRef, hideDescInput);
 
   return (
-    <div className="flex mt-1 h-max">
+    <motion.div
+      className="flex mt-1 h-max"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.2, duration: 0.7 }}
+    >
       <BsCardText className="ml-3" size={22} />
       <section className="w-full">
         {/* heading */}
@@ -56,7 +62,14 @@ const Desc = ({ task, setActiveDropdown }) => {
           )}
         </div>
         {status === "DESC_EXISTS" ? (
-          <p className="mt-4 text-textColor text-sm">{taskDesc}</p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="mt-4 text-textColor text-sm max-w-[450px]"
+          >
+            {taskDesc}
+          </motion.p>
         ) : status === "EDITING" ? (
           <div ref={descBoxRef}>
             <TextareaAutosize
@@ -94,7 +107,7 @@ const Desc = ({ task, setActiveDropdown }) => {
           </section>
         )}
       </section>
-    </div>
+    </motion.div>
   );
 };
 

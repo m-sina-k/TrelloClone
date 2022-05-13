@@ -6,6 +6,7 @@ import {
 } from "features/slices/boardsSlice";
 import { setPreviewerFile } from "features/slices/uiSlice";
 import { useOnClickOutside } from "hooks/useClickOutside";
+import { motion } from "framer-motion";
 import DeleteAttach from "../available-props/components/DeleteProp";
 import NameDd from "../available-props/components/NameDd";
 
@@ -20,7 +21,12 @@ const Attachment = ({ task, setActiveDropdown }) => {
   };
 
   return (
-    <div className="flex mt-5 h-max">
+    <motion.div
+      className="flex mt-5 h-max"
+      initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay:0.1,duration: 0.4 }}
+    >
       <MdOutlineAttachment className="ml-3" size={22} />
       <section className="w-full">
         {/* heading */}
@@ -93,7 +99,7 @@ const Attachment = ({ task, setActiveDropdown }) => {
                       setActiveDropdown={setActiveDropdown}
                     />
                     |
-                    {attach.type !== 'link' && (
+                    {attach.type !== "link" && (
                       <li
                         className="underline text-xs cursor-pointer hover:text-black"
                         onClick={() => dispatch(setPreviewerFile(attach))}
@@ -114,7 +120,7 @@ const Attachment = ({ task, setActiveDropdown }) => {
           })}
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 };
 

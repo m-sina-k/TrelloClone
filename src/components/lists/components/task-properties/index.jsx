@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setShowBackdrop } from "features/slices/uiSlice";
 import { setEditingTask } from "features/slices/boardsSlice";
 import { useOnClickOutside } from "hooks/useClickOutside";
+import { motion } from "framer-motion";
 import TaskTitle from "./TaskTitle";
 import TaskCurrentProps from "./current-props";
 import AvailableProps from "./available-props";
@@ -33,9 +34,12 @@ const TaskProperties = () => {
 
   return (
     <div className="overflow-auto fixed top-0 left-0 right-0 bottom-0 z-50">
-      <div
-        className="absolute z-50 top-[50px] left-[50%] translate-x-[-50%]  rounded-xl shadow p-7 bg-bgColor"
+      <motion.div
+        className="min-w-[750px] min-h-[75vh] max-w-[98%] absolute z-50 top-[50px] left-[50%] translate-x-[-50%] rounded-xl shadow p-7 bg-bgColor"
         ref={taskPropertiesRef}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
       >
         {/* close button */}
         <CgClose
@@ -60,7 +64,7 @@ const TaskProperties = () => {
             />
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -35,6 +35,15 @@ body {
   -o-transition: all 0.3s ease;
 }
 
+.ltr {
+  direction: ltr;
+}
+
+.react-time-picker__wrapper {
+  border: none;
+  cursor: pointer;
+}
+
 @layer components {
   .toolbar-button {
     @apply px-3 py-1 cursor-pointer rounded flex items-center text-white text-sm hover:bg-lightWhite;
@@ -117,4 +126,49 @@ body {
 
 .task-card:hover .task-card__edit-button {
   display: block;
+}
+
+.switch-button{
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background-color: silver;
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+}
+
+.switch-button .circle{
+  position: absolute;
+  top: 2.5px;
+  left: 2.5px;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+}
+
+.switch-button--active{
+  background-color: springgreen;
+}
+
+.switch-button--active .circle{
+  left: 55%;
 }

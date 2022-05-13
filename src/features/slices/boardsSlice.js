@@ -540,9 +540,66 @@ const boardsSlice = createSlice({
         (item) => item.id !== state.editingTask.id
       );
 
-      let editedAttachIndex = state.editingTask.attachList.findIndex(attch=>attch.id=== payload.id);
+      let editedAttachIndex = state.editingTask.attachList.findIndex(
+        (attch) => attch.id === payload.id
+      );
 
-      state.editingTask.attachList[editedAttachIndex].name = payload.name
+      state.editingTask.attachList[editedAttachIndex].name = payload.name;
+
+      state.currentBoard.lists[editingListIndex].items = [
+        ...tempItems,
+        state.editingTask,
+      ];
+
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
+    addTaskDate: (state, { payload }) => {
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+
+      const tempItems = state.currentBoard.lists[editingListIndex].items.filter(
+        (item) => item.id !== state.editingTask.id
+      );
+
+      state.editingTask.date = payload;
+
+      state.currentBoard.lists[editingListIndex].items = [
+        ...tempItems,
+        state.editingTask,
+      ];
+
+      state.boards = [...tempBoards, state.currentBoard];
+      localStorage.setItem(
+        "boards",
+        JSON.stringify({
+          boardsList: state.boards,
+          currentBoard: state.currentBoard,
+        })
+      );
+    },
+    removeTaskDate: (state) => {
+      const tempBoards = state.boards.filter(
+        (board) => board.id !== state.currentBoard.id
+      );
+      const editingListIndex = state.currentBoard.lists.findIndex(
+        (list) => list.id === state.updatingListInfo.id
+      );
+
+      const tempItems = state.currentBoard.lists[editingListIndex].items.filter(
+        (item) => item.id !== state.editingTask.id
+      );
+      delete state.editingTask.date;
 
       state.currentBoard.lists[editingListIndex].items = [
         ...tempItems,
@@ -586,5 +643,7 @@ export const {
   uploadTaskAttachment,
   removeTaskAttachment,
   renameAttachment,
+  addTaskDate,
+  removeTaskDate,
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

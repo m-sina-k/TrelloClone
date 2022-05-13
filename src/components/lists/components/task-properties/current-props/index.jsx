@@ -1,4 +1,5 @@
 import Tags from "./Tags";
+import Date from "./Date";
 import Desc from "./Desc";
 import Attachment from "./Attachment";
 import Checklists from "./check-list";
@@ -9,6 +10,7 @@ const TaskCurrentProps = ({ task, setActiveDropdown }) => {
       {task.labels?.length > 0 && (
         <Tags task={task} setActiveDropdown={setActiveDropdown} />
       )}
+      {task.date?.days && <Date task={task} />}
       <Desc task={task} setActiveDropdown={setActiveDropdown} />
       {task.attachList?.length && (
         <Attachment task={task} setActiveDropdown={setActiveDropdown} />

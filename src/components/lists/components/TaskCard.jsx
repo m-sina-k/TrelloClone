@@ -13,6 +13,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { MdOutlineAttachment } from "react-icons/md";
 import { BsCardText } from "react-icons/bs";
 import { FiEdit, FiCheckSquare } from "react-icons/fi";
+import { AiOutlineClockCircle } from "react-icons/ai";
 
 const TaskCard = ({ item, list }) => {
   const dispatch = useDispatch();
@@ -157,9 +158,10 @@ const TaskCard = ({ item, list }) => {
       <section className="flex gap-1 pb-1">
         {item.desc && <BsCardText size={15} />}
         {item.attachList?.length && <MdOutlineAttachment size={17}/>}
-        {item.checklists?.length > 0 && (
+        {item.checklists && (
           calculateTotalChecklistItems()
         )}
+        {item.date && <AiOutlineClockCircle size={15}/>}
       </section>
 
       {/* task edit button */}

@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useSelector } from "react-redux";
 import { useOnClickOutside } from "hooks/useClickOutside";
 
 import deleteSoundEffect from "assets/audio/delete-sound-effect.mp3";
@@ -13,8 +14,9 @@ const DeleteTask = ({
   headingText,
   callback,
   btnStyle,
-  deleteIcon
+  deleteIcon,
 }) => {
+  const { playAudio } = useSelector((state) => state.uiState);
   const deleteBtnRef = useRef();
   const [showConfirm, setShowConfirm] = useState(false);
   useOnClickOutside(deleteBtnRef, () => {
@@ -30,8 +32,10 @@ const DeleteTask = ({
     setActiveDropdown(false);
     callback();
     // play delete sound effect when delete task
-    const audio = new Audio(deleteSoundEffect);
-    audio.play();
+    if (playAudio) {
+      const audio = new Audio(deleteSoundEffect);
+      audio.play();
+    }
   };
 
   return (
@@ -47,7 +51,12 @@ const DeleteTask = ({
         }}
       >
         {deleteIcon && <FaRegTrashAlt size={18} className="ml-2" />}
-        <button className={`${btnUnderline ? 'underline' : ''}`}  onClick={(e) => e.preventDefault()}>{btnText}</button>
+        <button
+          className={`${btnUnderline ? "underline" : ""}`}
+          onClick={(e) => e.preventDefault()}
+        >
+          {btnText}
+        </button>
       </section>
       {showConfirm && (
         <div className="absolute z-10 top-[120%] left-0 min-w-[250px] p-2 rounded shadow-md bg-white">
@@ -68,7 +77,7 @@ const DeleteTask = ({
             </p>
             <button
               className="rounded shoadow text-white bg-red-600 w-full text-xs mt-2 py-1.5 hover:bg-red-700"
-              onClick={e=>fireCallback(e)}
+              onClick={(e) => fireCallback(e)}
             >
               حذف
             </button>

@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { deleteTaskChecklist } from "features/slices/boardsSlice";
+import { motion } from "framer-motion";
 
 import DeleteChecklist from "../../available-props/components/DeleteProp";
 import ChecklistItems from "./ChecklistItems";
@@ -15,7 +16,13 @@ const Checklists = ({ task, setActiveDropdown }) => {
     };
 
     return (
-      <div className="flex mt-8 h-max" key={checklist.id}>
+      <motion.div
+        className="flex mt-8 h-max"
+        key={checklist.id}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay:0.1,duration: 0.4 }}
+      >
         <FiCheckSquare className="ml-3" size={22} />
         <section className="w-full">
           {/* heading */}
@@ -37,7 +44,7 @@ const Checklists = ({ task, setActiveDropdown }) => {
           {/* add item section (add box) */}
           <Addbox checklist={checklist} setActiveDropdown={setActiveDropdown} />
         </section>
-      </div>
+      </motion.div>
     );
   });
 };

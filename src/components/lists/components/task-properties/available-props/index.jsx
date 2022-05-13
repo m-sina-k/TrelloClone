@@ -5,8 +5,8 @@ import Checklist from "./Checklist";
 import Tags from "./Tags";
 import Attachment from "./Attachment";
 import DeleteTask from "./components/DeleteProp";
+import Date from "./Date";
 
-// import { AiOutlineClockCircle } from "react-icons/ai";
 
 const AvailableProps = ({ task, setActiveDropdown, closeTaskProperties }) => {
   const dispatch = useDispatch()
@@ -23,6 +23,7 @@ const AvailableProps = ({ task, setActiveDropdown, closeTaskProperties }) => {
         <Tags task={task} setActiveDropdown={setActiveDropdown} />
         <Checklist task={task} setActiveDropdown={setActiveDropdown} />
         <Attachment task={task} setActiveDropdown={setActiveDropdown}/>
+        <Date task={task} setActiveDropdown={setActiveDropdown}/>
         <DeleteTask
           btnText="حذف این کار"
           headingText='کار حذف شود؟'
