@@ -8,6 +8,7 @@ const initialState = {
   editingTask: null,
   boards: LS_boards?.boardsList || null,
   currentBoard: LS_boards?.currentBoard || null,
+  showListLength:false,
 };
 
 const boardsSlice = createSlice({
@@ -615,6 +616,24 @@ const boardsSlice = createSlice({
         })
       );
     },
+    filterTask: (state, { payload }) => {
+      if(payload.type) state.showListLength = true
+      else state.showListLength = false
+      
+      state.currentBoard.lists.map((list) =>
+        list.items.map((item) => {
+          if (payload.type === 'label') {
+            if (!item.labels?.length && payload.filterList.indexOf("label") > -1) item.isHidden = true;
+            else delete item.isHidden;
+          }else if(payload.type === 'date'){
+            if (!item.date && payload.filterList.indexOf("date") > -1) item.isHidden = true;
+            else delete item.isHidden;
+          }else{
+            delete item.isHidden
+          }
+        })
+      );
+    },
   },
 });
 
@@ -645,5 +664,6 @@ export const {
   renameAttachment,
   addTaskDate,
   removeTaskDate,
+  filterTask,
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

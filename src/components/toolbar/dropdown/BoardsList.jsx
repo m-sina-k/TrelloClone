@@ -10,13 +10,12 @@ const BoardsList = ({ setShowDropdown }) => {
     dispatch(switchBoard(id));
     setShowDropdown(false);
   };
-  const boardsList = [...boards].reverse()
 
   return (
     <ul>
-      {boardsList.map(({ id, name, avatarBg, isMarked }) => (
+      {boards.map(({ id, name, avatarBg, isMarked },index) => (
         <li
-          key={id}
+          key={index}
           className={`flex items-center py-1.5 px-1 mb-1 rounded cursor-pointer hover:bg-whiteHover ${
             id === currentBoard.id ? "bg-light text-blue-700" : ""
           }`}

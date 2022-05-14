@@ -11,7 +11,6 @@ import logo from "assets/images/logo.png";
 // icon's
 import { TiStarOutline, TiStar } from "react-icons/ti";
 import { BiFilterAlt } from "react-icons/bi";
-import { RiUserSharedLine } from "react-icons/ri";
 import { HiOutlineCog } from "react-icons/hi";
 import { BsClipboardPlus, BsClipboard } from "react-icons/bs";
 
@@ -67,7 +66,6 @@ const Toolbar = () => {
             icon={BsClipboardPlus}
             dropdown="createBoard"
           />
-          <ToolbarButton text="اشتراک گذاری" icon={RiUserSharedLine} />
         </div>
 
         {/* left block item's */}
@@ -76,6 +74,7 @@ const Toolbar = () => {
             text="فیلتر ها"
             icon={BiFilterAlt}
             additionalClass="py-2"
+            dropdown="filters"
           />
           <ToolbarButton
             text="تنظیمات"

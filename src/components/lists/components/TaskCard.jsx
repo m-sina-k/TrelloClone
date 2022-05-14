@@ -112,7 +112,7 @@ const TaskCard = ({ item, list }) => {
   return (
     <motion.li
       key={item.id}
-      className="task-card px-1.5 cursor-pointer bg-white  relative rounded mb-1.5 shadow-sm text-sm"
+      className={`task-card px-1.5 cursor-pointer bg-white  relative rounded mb-1.5 shadow-sm text-sm ${item.isHidden ? 'hidden' : ''}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
