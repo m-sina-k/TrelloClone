@@ -1,7 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
-import { setShowSettingSidebar,setShowBackdrop,setAlertConfig } from "features/slices/uiSlice";
+import {
+  setShowSettingSidebar,
+  setShowBackdrop,
+  setAlertConfig,
+} from "features/slices/uiSlice";
 import { toggleBoardMark } from "features/slices/boardsSlice";
 import { setToolbarHeight } from "features/slices/uiSlice";
 import BoardName from "./BoardName";
@@ -16,7 +20,7 @@ import { BsClipboardPlus, BsClipboard, BsClipboardX } from "react-icons/bs";
 
 const Toolbar = () => {
   const { showSettingSidebar } = useSelector((state) => state.uiState);
-  const { currentBoard } = useSelector((state) => state.boardsState);
+  const { boards, currentBoard } = useSelector((state) => state.boardsState);
   const dispatch = useDispatch();
   const toolbarRef = useRef();
   const [boardName, setBoardName] = useState(currentBoard.name);
@@ -30,7 +34,7 @@ const Toolbar = () => {
     dispatch(setToolbarHeight(toolbarRef.current.clientHeight));
   }, [dispatch]);
 
-  const showBoardDelelteConfirm = ()=>{
+  const showBoardDelelteConfirm = () => {
     dispatch(setShowBackdrop(true));
     dispatch(
       setAlertConfig({
@@ -39,7 +43,7 @@ const Toolbar = () => {
         callback: { name: "CONFIRM_DELETE_BOARD", payload: currentBoard.id },
       })
     );
-  }
+  };
 
   return (
     <motion.nav
@@ -77,7 +81,13 @@ const Toolbar = () => {
             icon={BsClipboardPlus}
             dropdown="createBoard"
           />
-          <ToolbarButton text="حذف این تخته" icon={BsClipboardX} callback={showBoardDelelteConfirm} />
+          {boards.length > 1 && (
+            <ToolbarButton
+              text="حذف این تخته"
+              icon={BsClipboardX}
+              callback={showBoardDelelteConfirm}
+            />
+          )}
         </div>
 
         {/* left block item's */}
