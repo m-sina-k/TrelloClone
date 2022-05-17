@@ -17,7 +17,7 @@ const AvailableProps = ({ task, setActiveDropdown, closeTaskProperties }) => {
   };
   return (
     <div>
-      <small className="text-textColor">ویژگی ها : </small>
+      <small className="text-textColor"> اقدامات : </small>
       {/* available properties container */}
       <ul className="mt-2.5">
         <Tags task={task} setActiveDropdown={setActiveDropdown} />

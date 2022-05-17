@@ -46,7 +46,7 @@ const TaskCard = ({ item, list }) => {
 
   // prevent input focus on click
   const handleTaskTitleInputClick = (e) => {
-    e.preventDefault();
+    if (!editingModeEnabled) e.preventDefault();
   };
 
   const openTaskProperties = () => {
@@ -157,8 +157,8 @@ const TaskCard = ({ item, list }) => {
       {/* task properties icon's */}
       <section className="flex gap-1 pb-1">
         {item.desc && <BsCardText size={15} />}
-        {item.attachList?.length && <MdOutlineAttachment size={17}/>}
-        {item.checklists && (
+        {item.attachList?.length > 0 && <MdOutlineAttachment size={17}/>}
+        {item.checklists?.length > 0 && (
           calculateTotalChecklistItems()
         )}
         {item.date && <AiOutlineClockCircle size={15}/>}

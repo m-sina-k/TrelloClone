@@ -5,10 +5,10 @@ import {
   updateListName,
 } from "features/slices/boardsSlice";
 import { useOnClickOutside } from "hooks/useClickOutside";
+
 import AddTask from "./AddTask";
 import ListProperties from "./ListProperties";
 import TaskCard from "./TaskCard";
-
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { HiPlus } from "react-icons/hi";
 
@@ -26,8 +26,7 @@ const SingleList = ({ list }) => {
 
   const changeListName = () => {
     if (newListName.trim() !== "") {
-      dispatch(setUpdatingListInfo({ type: "updateName", id: list.id }));
-      dispatch(updateListName(newListName));
+      dispatch(updateListName({name:newListName,id:list.id}));
     } else {
       setNewListName(list.name);
     }
@@ -42,7 +41,9 @@ const SingleList = ({ list }) => {
   useOnClickOutside(propertiesListRef, () => setShowPropertiesList(false));
 
   return (
-    <article className="rounded shadow bg-light py-2 pr-3 pl-2 h-max min-w-[285px]">
+    <article
+      className="rounded shadow bg-light py-2 pr-3 pl-2 h-max min-w-[285px]"
+    >
       {/* list heading */}
       <section className=" pb-2 border-lightShade border-b-2 mb-2">
         <div className="flex w-full">
@@ -59,7 +60,7 @@ const SingleList = ({ list }) => {
           {/* list property relative container */}
           <section className="relative inline-flex" ref={propertiesListRef}>
             <span
-              className=" cursor-pointer p-1 transition-all duration-100 rounded hover:bg-lightShade"
+              className="h-max cursor-pointer p-1 transition-all duration-100 rounded hover:bg-lightShade"
               onClick={() => setShowPropertiesList(!showPropertiesList)}
             >
               <BiDotsHorizontalRounded />

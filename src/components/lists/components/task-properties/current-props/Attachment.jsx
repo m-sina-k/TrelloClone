@@ -23,9 +23,9 @@ const Attachment = ({ task, setActiveDropdown }) => {
   return (
     <motion.div
       className="flex mt-5 h-max"
-      initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay:0.1,duration: 0.4 }}
+      initial={{ opacity: 0,x:25 }}
+      animate={{ opacity: 1,x:0 }}
+      transition={{ delay:0.25,duration: 0.2 }}
     >
       <MdOutlineAttachment className="ml-3" size={22} />
       <section className="w-full">

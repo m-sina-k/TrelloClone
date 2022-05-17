@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 import { useOnClickOutside } from "hooks/useClickOutside";
 
 import deleteSoundEffect from "assets/audio/delete-sound-effect.mp3";
@@ -59,7 +60,11 @@ const DeleteTask = ({
         </button>
       </section>
       {showConfirm && (
-        <div className="absolute z-10 top-[120%] left-0 min-w-[250px] p-2 rounded shadow-md bg-white">
+        <motion.div
+        initial={{scale:0}}
+        animate={{scale:1}}
+        transition={{duration:0.125,type:"just"}}
+        className="absolute z-10 top-[120%] left-0 min-w-[250px] p-2 rounded shadow-lg border-2 bg-white">
           <section className="flex items-center justify-between pb-1.5 border-b-2 border-light">
             <h6 className="text-sm text-black">{headingText}</h6>
             <CgClose
@@ -82,7 +87,7 @@ const DeleteTask = ({
               حذف
             </button>
           </div>
-        </div>
+        </motion.div>
       )}
     </li>
   );

@@ -19,9 +19,9 @@ const Checklists = ({ task, setActiveDropdown }) => {
       <motion.div
         className="flex mt-8 h-max"
         key={checklist.id}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay:0.1,duration: 0.4 }}
+        initial={{ opacity: 0,x:25 }}
+      animate={{ opacity: 1,x:0 }}
+      transition={{ delay:0.30,duration: 0.2 }}
       >
         <FiCheckSquare className="ml-3" size={22} />
         <section className="w-full">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { filterTask } from "features/slices/boardsSlice";
 
@@ -14,13 +14,13 @@ const Filters = () => {
       tempFiltersList = [...filtersList, filterType];
     }
     setFiltersList(tempFiltersList);
-    dispatch(filterTask({ filterList: tempFiltersList, type: filterType }));
+    dispatch(filterTask(tempFiltersList));
   };
 
-  const clearFilters = ()=>{
-    setFiltersList([])
-    dispatch(filterTask({filtersList:[],type:null}))
-  }
+  const clearFilters = () => {
+    setFiltersList([]);
+    dispatch(filterTask(null));
+  };
 
   return (
     <ul className="py-1.5">
@@ -48,7 +48,10 @@ const Filters = () => {
       </li>
       {filtersList.length > 0 && (
         <li className="px-2">
-          <button className="text-xs rounded border-2 border-red-700 text-red-700 px-4 py-1.5 mr-auto block hover:bg-red-50" onClick={clearFilters}>
+          <button
+            className="text-xs rounded border-2 border-red-700 text-red-700 px-4 py-1.5 mr-auto block hover:bg-red-50"
+            onClick={clearFilters}
+          >
             حذف فیلتر ها
           </button>
         </li>

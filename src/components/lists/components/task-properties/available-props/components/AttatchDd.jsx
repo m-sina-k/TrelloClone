@@ -100,7 +100,7 @@ const AttatchDd = ({ closeDd }) => {
             onChange={(e) => setLinkUrl(e.target.value)}
             placeholder="آدرس لینک را وارد کنید..."
             autoFocus
-            className="border-2  rounded-sm bg-transparent w-full focus:bg-light p-1.5 text-textColor text-sm focus:border-blue-600"
+            className="border-2  rounded-sm bg-transparent w-full focus:bg-light p-1.5 text-black text-sm focus:border-blue-600"
           />
           <button
             type="submit"

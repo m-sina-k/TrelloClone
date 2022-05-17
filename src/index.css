@@ -128,7 +128,7 @@ body {
   display: block;
 }
 
-.switch-button{
+.switch-button {
   position: relative;
   width: 40px;
   height: 20px;
@@ -145,7 +145,7 @@ body {
   -o-transition: all 0.3s ease;
 }
 
-.switch-button .circle{
+.switch-button .circle {
   position: absolute;
   top: 2.5px;
   left: 2.5px;
@@ -165,10 +165,10 @@ body {
   -o-transition: all 0.3s ease;
 }
 
-.switch-button--active{
+.switch-button--active {
   background-color: limegreen;
 }
 
-.switch-button--active .circle{
+.switch-button--active .circle {
   left: 55%;
 }

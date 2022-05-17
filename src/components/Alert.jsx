@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setShowBackdrop, setAlertConfig } from "features/slices/uiSlice";
-import { deleteList } from "features/slices/boardsSlice";
+import { deleteList,deleteBoard } from "features/slices/boardsSlice";
 
 const Alert = () => {
   const dispatch = useDispatch();
@@ -12,6 +12,10 @@ const Alert = () => {
     dispatch(deleteList(callback.payload));
     closeAlert();
   };
+  const fireDeleteBoard = ()=>{
+    dispatch(deleteBoard(callback.payload));
+    closeAlert();
+  }
   const closeAlert = () => {
     dispatch(setShowBackdrop(false));
     dispatch(
@@ -28,6 +32,9 @@ const Alert = () => {
       case "CONFIRM_DELETE_LIST":
         fireDeleteList();
         break;
+      case "CONFIRM_DELETE_BOARD":
+        fireDeleteBoard();
+        break;
       default:
         closeAlert();
     }
@@ -40,7 +47,7 @@ const Alert = () => {
       }`}
     >
       <p className="text-textColor">{message}</p>
-      <section className="flex items-center gap-2 justify-end my-1">
+      <section className="flex items-center gap-2 justify-end mt-2 py-1">
         <button
           className="py-1 px-5 rounded shadow text-white transition-all duration-200 bg-green-600 hover:bg-green-700"
           onClick={() => fireCallback()}

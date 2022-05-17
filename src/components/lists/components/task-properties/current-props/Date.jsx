@@ -5,9 +5,9 @@ const Date = ({ task }) => {
   return (
     <motion.div
       className="mt-2 mb-5 flex"
-      initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay:0.1,duration: 0.4 }}
+      initial={{ opacity: 0,x:25 }}
+      animate={{ opacity: 1,x:0 }}
+      transition={{ delay:0.15,duration: 0.2 }}
     >
       <div className="mr-8">
         <h6 className="text-xs text-textColor mb-2">تاریخ</h6>

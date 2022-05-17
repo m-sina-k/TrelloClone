@@ -12,7 +12,7 @@ const TaskCurrentProps = ({ task, setActiveDropdown }) => {
       )}
       {task.date?.days && <Date task={task} />}
       <Desc task={task} setActiveDropdown={setActiveDropdown} />
-      {task.attachList?.length && (
+      {task.attachList?.length > 0 && (
         <Attachment task={task} setActiveDropdown={setActiveDropdown} />
       )}
       {task.checklists?.length > 0 && (

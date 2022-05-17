@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 import bg1 from "assets/images/backgrounds/bg-01.jpg";
 import bg2 from "assets/images/backgrounds/bg-02.jpg";
 import bg3 from "assets/images/backgrounds/bg-03.jpg";
@@ -7,25 +6,28 @@ import bg4 from "assets/images/backgrounds/bg-04.jpg";
 
 const initialState = {
   themeColors: [
-    "#82ccdd",
-    "#F0E68C",
-    "#b71540",
-    "#ffd32a",
-    "#B33771",
-    "#2ecc71",
+    "#227093",
+    "#ccae62",
+    "#ffbe76",
+    "#EA2027",
+    "#f7b731",
+    "#6D214F",
+    "#44bd32",
+    "#b33939",
+    "#3d3d3d",
+    "#e66767"
   ],
   avatarBgColors: [
-    "#34495e",
+    "#3ae374",
     "#3498db",
-    "#2ecc71",
-    "#d35400",
-    "#6D214F",
+    "#f53b57",
+    "#ffa801",
     "#EA2027",
   ],
   themeBackgrounds: [bg1, bg2, bg3, bg4],
   activeBackground: JSON.parse(localStorage.getItem("theme")) || {
     type: "color",
-    value: "#82ccdd",
+    value: "#227093",
   },
   showSettingSidebar: false,
   // getting tooblar heigth to calculate lists container heigth (100vh - toolbarHeight)
