@@ -2,6 +2,8 @@
 
 an ultimate todo list inspired by [Trello](https://trello.com/).
 
+[live demo](https://62f75608f5c5fc72ddc31362--marvelous-macaron-d55aac.netlify.app/).
+
 ---
 
 ![landing page](./src/assets/images/screenshots/landing-page.png)
